@@ -1,9 +1,9 @@
-package com.cerner.example.rigid.apis.restrictive.good;
+package com.cerner.example.rigid.apis.restrictive.validation.good;
 
 import java.util.List;
 
-import com.cerner.example.rigid.apis.restrictive.common.Appointment;
-import com.cerner.example.rigid.apis.restrictive.common.AppointmentCriteria;
+import com.cerner.example.rigid.apis.restrictive.validation.common.Appointment;
+import com.cerner.example.rigid.apis.restrictive.validation.common.AppointmentCriteria;
 
 @SuppressWarnings({ "javadoc" })
 public interface AppointmentManager
