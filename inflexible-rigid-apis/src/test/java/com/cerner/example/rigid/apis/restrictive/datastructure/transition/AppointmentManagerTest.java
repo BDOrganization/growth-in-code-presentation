@@ -10,7 +10,8 @@ import java.util.Set;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.cerner.example.rigid.apis.restrictive.datastructure.common.AppointmentCriteria;
+import com.bdorganization.restrictive.datastructure.common.AppointmentCriteria;
+import com.bdorganization.restrictive.datastructure.transition.AppointmentManager;
 
 public class AppointmentManagerTest
 {
