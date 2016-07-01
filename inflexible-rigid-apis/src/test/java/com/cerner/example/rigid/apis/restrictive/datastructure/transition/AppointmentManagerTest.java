@@ -39,7 +39,7 @@ public class AppointmentManagerTest
     {
         Set<AppointmentCriteria> criteria = new HashSet<AppointmentCriteria>();
 
-        // collections works!
+        // collections work!
         manager.createAppointments(criteria);
     }
 }
