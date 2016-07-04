@@ -78,6 +78,7 @@ This presentation will be geared towards software engineers and architects who a
 ### Compiling against implementations
 * DON’T
  * Pull out an interface for the class, even if the interface is less than ideal.  You might even consider writing an adapter that takes the implementation class and forces it to conform to a more ideal interface, giving you more freedom to specify a nicer interface.  This will also allow you to handle the re-factor at a later time.
+ * This includes casting to implementation right after accepting an interface in a method (http://knowyourmeme.com/photos/122-youre-doing-it-wrong)
 
 ### Third-party coupling
 * Writing against third party implementations
