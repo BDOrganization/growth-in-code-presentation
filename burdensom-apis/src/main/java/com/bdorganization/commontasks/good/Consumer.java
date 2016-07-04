@@ -6,6 +6,9 @@ import com.bdorganization.commontasks.common.Participant;
 
 public class Consumer
 {
+    // Suppress unused warnings since this is showing what the API is capable of, not necessarily
+    // consuming it.
+    @SuppressWarnings("unused")
     public static void main(String[] args)
     {
         AppointmentManager appointmentManager = new AppointmentManagerImpl();
