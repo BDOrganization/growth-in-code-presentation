@@ -1,4 +1,4 @@
-package com.cerner.example.rigid.apis.restrictive.datastructure.transition;
+package com.bdorganization.restrictive.datastructure.transition;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,7 +40,7 @@ public class AppointmentManagerTest
     {
         Set<AppointmentCriteria> criteria = new HashSet<AppointmentCriteria>();
 
-        // collections work!
+        // sets work!
         manager.createAppointments(criteria);
     }
 }

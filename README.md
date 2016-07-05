@@ -63,6 +63,7 @@ This presentation will be geared towards software engineers and architects who a
 * Misrepresented Data Types - String representing the days of week
 * Taking in primitive values vs strongly typed identifiers (think MID).
 * Model objects that guarantee no consistent state.
+* Too many objects and confusing constructor
 
 ### “Untestable” code
 * Using ‘new’ in constructors versus injecting dependencies leading to difficult to construct objects
