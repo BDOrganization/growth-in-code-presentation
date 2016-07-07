@@ -1,0 +1,2 @@
+# growth-in-code-presentation
+The slides for this presentation utilize the [reveal.js](https://github.com/hakimel/reveal.js/) HTML presentation framework. The content within the reveal.js-master directory started as a clone of that repo and were then modified for the purpose of this presentation.
