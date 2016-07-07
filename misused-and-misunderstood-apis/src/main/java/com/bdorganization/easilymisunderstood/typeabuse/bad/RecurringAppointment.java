@@ -1,5 +1,6 @@
 package com.bdorganization.easilymisunderstood.typeabuse.bad;
 
+@SuppressWarnings({ "javadoc" })
 public interface RecurringAppointment
 {
     /**
@@ -7,5 +8,5 @@ public interface RecurringAppointment
      *         character will be present. For days of the week that there is no recurrence, a space character will be
      *         present.
      */
-    String weeklyRecurrence();
+    String getWeeklyRecurrence();
 }
