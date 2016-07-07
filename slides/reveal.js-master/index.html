@@ -1,50 +1,95 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+        <title>The Evolution of the Devil's Snare</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/moon.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>The Evolution of the Devil's Snare</h1>
+                    <p>
+                        <small>Created by Dustin Singleton and Brandon Rockhold</small>
+                    </p>
+                </section>
+                <section>
+                    <h2>
+                        Overview
+                    </h2>
+                    <ul>
+                        <li>...</li>
+                        <li>...</li>
+                    </ul>
+                </section>
+                <section>
+                    <section data-background-color="#4d7e65">
+                        <h2>Inflexible/Rigid APIs</h2>
+                        <p>
+                            Find some image or gif to include on section transition slides...
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Inflexible/Rigid APIs</h2>
+                        <ul>
+                            <li>...after a section transition</li>
+                            <li>...we can have a bulleted list slide with some details that we'll touch on in the code slides that follow</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Bad Example</h2>
+                        <pre>
+                            <!-- Only use contenteditable if we actually want to be able to modify text during the presentation. Note that it does not support undo capability, so unintentional modifications would be not-so-good -->
+                            <code data-trim data-noescape contenteditable="true">
+public interface AppointmentManager
+{
+    // List<AppointmentCriteria> assumes order is needed, but what if you're just iterating 
+    // over elements
+    List<Appointment> createAppointments(List<AppointmentCriteria> criteria);
+}
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+            </div>
+        </div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
 
-		<script>
-			// More info https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				history: true,
+        <script>
+            // More info https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                history: true,
 
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+                transition: 'convex',
+
+                // More info https://github.com/hakimel/reveal.js#dependencies
+                dependencies: [
+                    { src: 'plugin/markdown/marked.js' },
+                    { src: 'plugin/markdown/markdown.js' },
+                    { src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+        </script>
+    </body>
 </html>
