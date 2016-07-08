@@ -1,4 +1,4 @@
-package com.bdorganization.easilymisunderstood.typeabuse.transition.wrapper;
+package com.bdorganization.easilymisunderstood.typeabuse.transition.common;
 
 @SuppressWarnings("javadoc")
 public enum DayOfWeek

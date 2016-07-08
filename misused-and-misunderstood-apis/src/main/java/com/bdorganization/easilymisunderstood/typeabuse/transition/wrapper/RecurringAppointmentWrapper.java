@@ -3,7 +3,9 @@ package com.bdorganization.easilymisunderstood.typeabuse.transition.wrapper;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.bdorganization.easilymisunderstood.typeabuse.transition.wrapper.DayOfWeek.*;
+import com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek;
+
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.*;
 
 @SuppressWarnings({ "javadoc" })
 public class RecurringAppointmentWrapper
