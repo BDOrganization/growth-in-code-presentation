@@ -4,11 +4,10 @@ import java.util.List;
 
 import com.bdorganization.commontasks.common.Participant;
 
+// Suppress unused warnings since this is showing what the API is capable of, not necessarily consuming it.
+@SuppressWarnings({ "javadoc", "unused" })
 public class Consumer
 {
-    // Suppress unused warnings since this is showing what the API is capable of, not necessarily
-    // consuming it.
-    @SuppressWarnings("unused")
     public static void main(String[] args)
     {
         AppointmentManager appointmentManager = new AppointmentManagerImpl();
@@ -17,7 +16,7 @@ public class Consumer
         Participants participants = appointment.getParticipants();
 
         /*
-         * In this scenario, all of the heavy lifting is taken care of for the consumer. On top of that, if any
+         * In this scenario, all of the heavy lifting is taken care of FOR the consumer. On top of that, if any
          * additional consumers want to do the same kind of work, they can simply call these methods and there is no
          * concern of duplicate code.
          * 
