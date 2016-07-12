@@ -1,0 +1,9 @@
+.slide-with-code pre {
+	box-shadow: none;
+	width: 100%;
+}
+
+.slide-with-code pre code {
+	margin: 0px;
+	width: 100%;
+}
