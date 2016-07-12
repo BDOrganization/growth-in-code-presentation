@@ -43,17 +43,6 @@
                     </ul>
                 </section>
                 <section>
-                    <h2>Goals</h2>
-                    <ul>
-                        <li>Discuss API designs which complicate/restrict ability to grow your code base</li>
-                        <li>Provide passive transition paths for some* of these scenarios</li>
-                        <li>Provide ACTIONABLE information that can be utilized IMMEDIATELY following the presentation</li>
-                    </ul>
-                    <br />
-                    <br />
-                    <small>* Only <em>some</em> of these scenarios, as we are unfortunately not wizards</small>
-                </section>
-                <section>
                     <h2>Why Should You Consider Listening to Us?</h2>
                     <ul>
                         <li>Software Architects with a combined tenure of 15+ years</li>
@@ -67,25 +56,44 @@
                     </ul>
                 </section>
                 <section>
+                    <h2>Overview / Goals</h2>
+                    <ul>
+                        <li>Discuss API designs which complicate/restrict ability to grow your code base</li>
+                        <li>Provide passive transition paths for some* of these scenarios</li>
+                        <li>Provide ACTIONABLE information that can be utilized IMMEDIATELY following the presentation</li>
+                    </ul>
+                    <br />
+                    <br />
+                    <small>* Only <em>some</em> of these scenarios, as we are unfortunately not wizards</small>
+                </section>
+                <section>
                     <section data-background-color="#4d7e65">
-                        <h2>Inflexible/Rigid APIs</h2>
-                        <img src="http://i.imgur.com/elnwfL2.png" height=350 width=350 />
+                        <h2>Incorrect Data Types / Data Type Abuse</h2>
+                        <img src="http://i.imgur.com/XC08aVV.png" height=259 width=350 />
                     </section>
                     <section>
-                        <h2>Inflexible/Rigid APIs</h2>
+                        <h2>Incorrect Data Types / Data Type Abuse</h2>
                         <ul>
-                            <li>...after a section transition</li>
-                            <li>...we can have a bulleted list slide with some details that we'll touch on in the code slides that follow</li>
+                            <li>Easy to misuse / Difficult to understand without additional doc</li>
+                            <li>Lack proper means of validation, or at least complicate it</li>
+                            <li>Place unnecessary burden on consumers (if they must parse or translate)</li>
                         </ul>
                     </section>
                     <section data-state='slide-with-code'>
-                        <h2>Bad Example</h2>
+                        <h2>Poor Data Type Example</h2>
                         <pre>
-                            <code data-trim data-noescape>
-public interface AppointmentManager
-{
-    // List<AppointmentCriteria> assumes order is needed, but what if you're just iterating over elements
-    List<Appointment> createAppointments(List<AppointmentCriteria> criteria);
+                            <code class="Java" data-trim data-noescape>
+public interface RecurringAppointment {
+    /**
+     * @return a string representing the days of the week. For the day of the week that
+     *         the recurrence is on, an 'X' character will be present. For days of the
+     *         week that there is no recurrence, a space character will be present.
+     * 
+     *         Ex: " XXXXX " (Monday - Friday) 
+     *         
+     *         Ex: " X X XX" (Mon/Wed/Fri/Sat)
+     */
+    String getWeeklyRecurrence();
 }
                             </code>
                         </pre>
