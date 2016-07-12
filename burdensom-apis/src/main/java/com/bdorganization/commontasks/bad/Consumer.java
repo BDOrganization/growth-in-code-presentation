@@ -5,13 +5,18 @@ import java.util.List;
 
 import com.bdorganization.commontasks.common.Participant;
 
-@SuppressWarnings({ "javadoc", "nls" })
+@SuppressWarnings({ "javadoc" })
 public class Consumer
 {
-    public static void main(String[] args)
-    {
-        AppointmentManager appointmentManager = new AppointmentManagerImpl();
+    private final AppointmentManager appointmentManager;
 
+    public Consumer()
+    {
+        this.appointmentManager = new AppointmentManagerImpl();
+    }
+
+    public void consume()
+    {
         // Let's assume that a consumer of the appointment manager needed to create an appointment and then ensure that
         // all of the participants in the appointment were successfully booked. The consumer of this appointment manager
         // would have to do the following

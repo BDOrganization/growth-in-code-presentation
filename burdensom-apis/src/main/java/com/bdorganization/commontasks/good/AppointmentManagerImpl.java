@@ -6,6 +6,7 @@ import java.util.List;
 import com.bdorganization.commontasks.common.MockParticipantData;
 import com.bdorganization.commontasks.common.Participant;
 
+@SuppressWarnings({ "javadoc" })
 public class AppointmentManagerImpl implements AppointmentManager
 {
     @Override
@@ -26,6 +27,7 @@ public class AppointmentManagerImpl implements AppointmentManager
         /**
          * @return the participants
          */
+        @Override
         public Participants getParticipants()
         {
             return participants;

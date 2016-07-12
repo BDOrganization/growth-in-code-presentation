@@ -1,5 +1,6 @@
 package com.bdorganization.commontasks.common;
 
+@SuppressWarnings({ "javadoc" })
 public interface Participant
 {
     /**

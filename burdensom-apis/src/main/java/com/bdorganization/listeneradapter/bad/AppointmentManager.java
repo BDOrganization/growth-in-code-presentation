@@ -1,6 +1,6 @@
 package com.bdorganization.listeneradapter.bad;
 
-@SuppressWarnings({ "javadoc", "nls" })
+@SuppressWarnings({ "javadoc" })
 public class AppointmentManager
 {
     public void createAppointment(AppointmentManagerListener listener)

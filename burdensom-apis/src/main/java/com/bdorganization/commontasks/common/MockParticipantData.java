@@ -7,6 +7,7 @@ import java.util.List;
  * This is just a simple class for creating fake data. It is here so that it does not have to be duplicated and that it
  * is not distracting from the important code.
  */
+@SuppressWarnings({ "javadoc", "nls" })
 public class MockParticipantData
 {
     public static List<Participant> createMockParticipants()
@@ -33,16 +34,19 @@ public class MockParticipantData
             this.isBooked = isBooked;
         }
 
+        @Override
         public String getName()
         {
             return name;
         }
 
+        @Override
         public boolean isConflicted()
         {
             return isConflicted;
         }
 
+        @Override
         public boolean isBooked()
         {
             return isBooked;
