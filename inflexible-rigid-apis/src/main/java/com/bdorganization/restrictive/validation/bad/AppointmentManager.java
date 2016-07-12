@@ -14,7 +14,9 @@ public interface AppointmentManager
      * @param criteria
      *            The list of {@link AppointmentCriteria} objects used to create the appointments. This list cannot be
      *            {@code null}, empty or contain {@code null} elements.
-     * @return the list of created appointments.
+     * @return the list of created appointments. This list will never be {@code null} but could be empty.
+     * @throws IllegalArgumentException
+     *             if the specified {@code criteria} is {@code null} or empty
      */
     List<Appointment> createAppointments(List<AppointmentCriteria> criteria);
 }

@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.bdorganization.restrictive.datastructure.common.AppointmentCriteria;
-import com.bdorganization.restrictive.datastructure.transition.AppointmentManager;
 
+@SuppressWarnings({ "javadoc" })
 public class AppointmentManagerTest
 {
     private AppointmentManager manager = Mockito.mock(AppointmentManager.class);
@@ -34,7 +34,7 @@ public class AppointmentManagerTest
         // collections works!
         manager.createAppointments(criteria);
     }
-    
+
     @Test
     public void testCreateAppointments_set()
     {
