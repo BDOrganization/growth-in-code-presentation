@@ -4,16 +4,17 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
+@SuppressWarnings({ "javadoc" })
 public class AppointmentManager
 {
 
     /**
-     * Returns a collection of the available {@link Date}s that an appointment could begin based on the date provided. If no
-     * appointment begin times can be found, {@code null} will be returned.
+     * Returns a collection of the available {@link Date}s that an appointment could begin based on the date provided.
+     * If no appointment begin times can be found, {@code null} will be returned.
      * 
      * @param startTime
-     *            The start date. This value will be used to determine
-     * @return the available begin dates.
+     *            The first possible start date. This value will be used to determine the available begin dates.
+     * @return a list of the available appointment begin dates.
      */
     public Collection<Date> getAvailableBeginTimes(Date startDate, Date endTime)
     {

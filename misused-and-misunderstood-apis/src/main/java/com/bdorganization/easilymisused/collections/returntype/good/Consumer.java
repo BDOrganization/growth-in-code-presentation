@@ -3,6 +3,7 @@ package com.bdorganization.easilymisused.collections.returntype.good;
 import java.util.Date;
 import java.util.List;
 
+@SuppressWarnings({ "javadoc", "nls" })
 public class Consumer
 {
     public static void main(String[] args)
