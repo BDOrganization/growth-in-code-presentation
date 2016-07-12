@@ -1,4 +1,4 @@
-package com.bdorganization.listener.good.growth;
+package com.bdorganization.listeneradapter.good.growth;
 
 @SuppressWarnings({ "javadoc", "nls" })
 public class AppointmentManager

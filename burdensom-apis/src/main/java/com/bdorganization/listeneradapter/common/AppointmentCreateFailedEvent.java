@@ -1,4 +1,4 @@
-package com.bdorganization.listener.common;
+package com.bdorganization.listeneradapter.common;
 
 public interface AppointmentCreateFailedEvent
 {
