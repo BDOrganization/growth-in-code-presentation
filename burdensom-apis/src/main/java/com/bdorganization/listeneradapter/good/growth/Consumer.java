@@ -1,6 +1,6 @@
-package com.bdorganization.listener.good.growth;
+package com.bdorganization.listeneradapter.good.growth;
 
-import com.bdorganization.listener.common.AppointmentCreatedEvent;
+import com.bdorganization.listeneradapter.common.AppointmentCreatedEvent;
 
 public class Consumer
 {

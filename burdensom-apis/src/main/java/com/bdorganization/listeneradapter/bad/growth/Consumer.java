@@ -1,7 +1,7 @@
-package com.bdorganization.listener.bad.growth;
+package com.bdorganization.listeneradapter.bad.growth;
 
-import com.bdorganization.listener.common.AppointmentCreateFailedEvent;
-import com.bdorganization.listener.common.AppointmentCreatedEvent;
+import com.bdorganization.listeneradapter.common.AppointmentCreateFailedEvent;
+import com.bdorganization.listeneradapter.common.AppointmentCreatedEvent;
 
 public class Consumer
 {

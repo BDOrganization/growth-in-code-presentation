@@ -1,6 +1,6 @@
-package com.bdorganization.listener.good;
+package com.bdorganization.listeneradapter.good;
 
-import com.bdorganization.listener.common.AppointmentCreatedEvent;
+import com.bdorganization.listeneradapter.common.AppointmentCreatedEvent;
 
 public class AppointmentManagerListenerAdapter implements AppointmentManagerListener
 {

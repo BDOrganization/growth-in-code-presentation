@@ -1,6 +1,6 @@
-package com.bdorganization.listener.bad;
+package com.bdorganization.listeneradapter.bad;
 
-import com.bdorganization.listener.common.AppointmentCreatedEvent;
+import com.bdorganization.listeneradapter.common.AppointmentCreatedEvent;
 
 public class Consumer
 {
