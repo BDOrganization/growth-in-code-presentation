@@ -625,35 +625,132 @@ Appointment appointment = builder.build();
                     <section data-background-color="#4d7e65">
                         <h2>Weak Typing</h2>
                         <img src="http://i.imgur.com/0bFY1B5.png" height=257 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
                     <section>
                         <h2>Weak Typing</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>
+                                Unnecessarily exposes consumers to a range of potential defects
+                                <ul>
+                                    <li>Invalid values around boundaries (for primitives)</li>
+                                    <li>Unintentional use of value in API (same type, but different meaning)</li>
+                                </ul>
+                            </li>
+                            <li>Any values which make it through boundary checking, but represent different data will blow up at runtime (or silently wreck havoc)</li>
                         </ul>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>Error-prone, easier for consumers to mess up</li>
+                                <li>Burden to do boundary checking either lies within implementation (and must be doc'd thoroughly), or must be handled by all consumers (and still must be doc'd thoroughly)
+                                <li>If correct primitive value type is provided, but it corresponds to a different data element, it may or may not blow up at runtime.</li>
+                                <li>Even if it doesn't blow up at runtime, it will cause major issues with data integrity</li>
                         </aside>
                     </section>
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Weak Type Example</h2>
                         <pre>
-                            <code data-trim>
-// code goes here with no additional spaces
+                            <code data-trim data-noescape>
+public class Appointment {
+    ...
+    public Appointment(long id, List&lt;Participant&gt; participants) {...}
+
+    public long getId() {
+        return id;
+    }
+
+    public List&lt;Participant&gt; getParticipants() {
+        return participants;
+    }
+}
+public interface ParticipantScheduleManager {
+    ParticipantSchedule getParticipantSchedule(long participantId);
+}
                             </code>
                         </pre>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>Here we have a simple Appointment class, which can be constructed with and allows returning a long id.</li>
+                                <li>This class also has capability to get a list of Participant objects, each of which also has a long id.</li>
+                                <li>The bottom interface is used to retrieve a schedule for the specified Participant, using the long id for the Participant.</li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Weak Type Example</h2>
+                        <pre>
+                            <code data-trim>
+public void consume(Appointment appointment) {
+    for (Participant participant : appointment.getParticipants()) {
+        System.out
+                .println("Getting schedule for participant: " + participant.getId());
+
+        // Oops! You can see here that the wrong long ID was used
+        System.out.println(participantScheduleManager
+                .getParticipantSchedule(appointment.getId()));
+    }
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>In this consumption example, the method is iterating over the various Participant objects involved in the appointment.</li>
+                                <li>The participant's id is retrieved an utilized within.</li>
+                                <li>When calling the method to retrieve the Participant's scheduled, however, rather than passing the long value for the current Participant, a mistake was made and the Appointment's long id value was instead passed.</li>
+                                <li>There is no compile, nor runtime indication that there was any problem here.</li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Strong Type Example</h2>
+                        <pre>
+                            <code data-trim>
+public class Appointment {
+    ...
+    public Appointment(AppointmentIdentifier id, List&lt;Participant&gt; participants) {...}
+
+    public AppointmentIdentifier getId() {
+        return id;
+    }
+
+    public List&lt;Participant&gt; getParticipants() {
+        return participants;
+    }
+}
+public interface ParticipantScheduleManager {
+    ParticipantSchedule getParticipantSchedule(ParticipantIdentifier participantId);
+    ParticipantSchedule getParticipantSchedule(Participant participant);
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>This example shows updated Appointment and ParticipantScheduleManager APIs to use strong types.</li>
+                                <li>The previously used long values are replaced with objects representing the identifiers.</li>
+                            </ul>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Strong Type Example</h2>
+                        <pre>
+                            <code data-trim>
+public void consume(Appointment appointment) {
+    for (Participant participant : appointment.getParticipants()) {
+        System.out
+                .println("Getting schedule for participant: " + participant.getId());
+
+        // The below call to participant.getId() now returns ParticipantIdentifier, so
+        // it's no longer possible to accidentally pass the id for the appointment.
+        System.out.println(participantScheduleManager
+                .getParticipantSchedule(participant.getId()));
+    }
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>In the updated consumption example, the previously possible class of defects around using the Appointment's identifier when attempting to retrieve the Participant's schedule is no longer possible.</li>
+                                <li>In this case, such a mistake would be a compile-time notification.</li>
+                            </ul>
                         </aside>
                     </section>
                 </section>
@@ -697,35 +794,54 @@ Appointment appointment = builder.build();
                     <section data-background-color="#4d7e65">
                         <h2>Growing Parameter List</h2>
                         <img src="http://i.imgur.com/DXZRJY7.png" height=263 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
                     <section>
                         <h2>Growing Parameter List</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>Can lead to an explosion of overloaded methods (in the interest of passivity)</li>
+                            <li>
+                                Difficult/Painful to consume
+                                <ul>
+                                    <li>Increased liklihood of errors due to specifying params in incorrect order</li>
+                                    <li>Hard to remember what each value represents, particularly if not strongly typed</li>
+                                    <li>Hard to find correct version of method to call for each use-case</li>
+                                </ul>
+                            </li>
                         </ul>
                         <aside class="notes">
                             <ul>
                                 <li></li>
                                 <li></li>
+                            </ul>
                         </aside>
                     </section>
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Poor Handling of Growing Params</h2>
+                        <p>Initial release of API</p>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public interface AppointmentManager {
+    List&lt;Appointment&gt; getAppointments(long appointmentId);
+}
                             </code>
                         </pre>
+                        <p>Follow-up release of API</p>
+                        <pre>
+                            <code data-trim>
+public interface AppointmentManager {
+    List&lt;Appointment&gt; getAppointments(long appointmentId);
+
+    List&lt;Appointment&gt; getAppointments(long appointmentId, long participantId,
+            Date beginDate, Date endDate);
+}
+                            </code>
+                        </pre>
+                        <p>...and the cycle continues through the years</p>
                         <aside class="notes">
                             <ul>
                                 <li></li>
                                 <li></li>
+                            </ul>
                         </aside>
                     </section>
                 </section>
@@ -807,17 +923,20 @@ Appointment appointment = builder.build();
                     <section data-background-color="#4d7e65">
                         <h2>Abstraction Leaks</h2>
                         <img src="http://i.imgur.com/YJJJ4b2.png" height=233 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
                     <section>
                         <h2>Abstraction Leaks</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>
+                                Complicates future migration efforts to new technology/implementation
+                                <ul>
+                                    <li>Likely requires painful non-passive API changes</li>
+                                    <li>May prevent uplifting to new technology necessary to support growth</li>
+                                    <li>May make existing API's awkward/confusing if not replaced</li>
+                                </ul>
+                            </li>
+                            <li>May reveal avenues for attackers to exploit</li>
+                            <li>Can unnecessarily complicate consumer understanding (if level of detail is inappropriate)</li>
                         </ul>
                         <aside class="notes">
                             <ul>
@@ -826,17 +945,64 @@ Appointment appointment = builder.build();
                         </aside>
                     </section>
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Common Extraction Leak Examples</h2>
                         <pre>
-                            <code data-trim>
-// code goes here with no additional spaces
+                            <code data-trim data-noescape>
+public interface AppointmentManager {
+    AppointmentRemoveStatus removeAppointment(Appointment appointment)
+            <mark>throws SQLException</mark>;
+
+    // Note the <mark>Database</mark> reference in the method name...
+    AppointmentRemoveStatus removeAppointmentFromDatabase(Appointment appointment);
+
+    /**
+     * Removes the appointment from appointments table in the <mark>database</mark> where the
+     * {@code appointmentId} matches app_id.
+     * 
+     * @param appointmentId
+     *            The id matching the app_id in the appointments table.
+     * @return the status of the removal.
+     */
+    AppointmentRemoveStatus removeAppointment(long appointmentId);
+}
                             </code>
                         </pre>
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Common Extraction Leak Examples</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public interface AppointmentManager {
+    // Note the <mark>Button</mark> reference in the method name...
+    AppointmentRemoveStatus removeButtonClicked();
+
+    /**
+     * Removes the specified appointment.
+     * 
+     * @param appointment
+     *            The appointment to be removed.
+     * @return the status of the appointment removal. This will be formatted as a <mark>JSON</mark>
+     *         <mark>string</mark> with a property called {@code status} and a value of either
+     *         {@code SUCCESS} or {@code FAILURE}.
+     */
+    String removeSingleAppointment(Appointment appointment);
+}
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Common Abstraction Leak Indicators</h2>
+                        <ul>
+                            <li>Database concepts, table/field references</li>
+                            <li>Data formats which are too low-level for the current API</li>
+                            <li>
+                                UI concepts specific to your current implementation
+                                <ul>
+                                    <li>UI controls like buttons, checkboxes, hyperlinks, etc</li>
+                                    <li>UI frameworks; watch your APIs AND import statements</li>
+                                </ul>
+                            </li>
+                        </ul>
                     </section>
                 </section>
                 <section>
