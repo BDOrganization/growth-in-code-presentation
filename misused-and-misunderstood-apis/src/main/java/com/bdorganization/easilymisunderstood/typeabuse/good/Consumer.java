@@ -1,38 +1,34 @@
 package com.bdorganization.easilymisunderstood.typeabuse.good;
 
 @SuppressWarnings({ "javadoc", "nls" })
-public class Consumer
-{
+public class Consumer {
     /*
-     * If we are using an enumeration, there is no concern for confusion. SUNDAY means Sunday. Consumers are not
-     * required to do any translation on their own.
+     * If we are using an enumeration, there is no concern for confusion. SUNDAY means
+     * Sunday. Consumers are not required to do any translation on their own.
      */
-    public void consume(RecurringAppointment recurringAppointment)
-    {
-        for (DayOfWeek dayOfWeek : recurringAppointment.getWeeklyRecurrence())
-        {
-            switch (dayOfWeek)
-            {
+    public void consume(RecurringAppointment recurringAppointment) {
+        for (DayOfWeek dayOfWeek : recurringAppointment.getWeeklyRecurrence()) {
+            switch (dayOfWeek) {
                 case SUNDAY:
-                    System.out.println("ASSUME SUNDAY");
+                    System.out.println("DEFINITELY SUNDAY");
                     break;
                 case MONDAY:
-                    System.out.println("ASSUME MONDAY");
+                    System.out.println("DEFINITELY MONDAY");
                     break;
                 case TUESDAY:
-                    System.out.println("ASSUME TUESDAY");
+                    System.out.println("DEFINITELY TUESDAY");
                     break;
                 case WEDNESDAY:
-                    System.out.println("ASSUME WEDNESDAY");
+                    System.out.println("DEFINITELY WEDNESDAY");
                     break;
                 case THURSDAY:
-                    System.out.println("ASSUME THURSDAY");
+                    System.out.println("DEFINITELY THURSDAY");
                     break;
                 case FRIDAY:
-                    System.out.println("ASSUME FRIDAY");
+                    System.out.println("DEFINITELY FRIDAY");
                     break;
                 case SATURDAY:
-                    System.out.println("ASSUME SATURDAY");
+                    System.out.println("DEFINITELY SATURDAY");
                     break;
             }
         }

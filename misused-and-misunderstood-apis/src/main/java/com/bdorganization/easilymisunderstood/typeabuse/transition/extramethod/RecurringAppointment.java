@@ -14,13 +14,11 @@ import java.util.Set;
 import com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek;
 
 @SuppressWarnings("javadoc")
-public class RecurringAppointment
-{
+public class RecurringAppointment {
     private final long appointmentId;
     private final String recurrence;
 
-    public RecurringAppointment(long appointmentId, String recurrence)
-    {
+    public RecurringAppointment(long appointmentId, String recurrence) {
         this.appointmentId = appointmentId;
         this.recurrence = recurrence;
     }
@@ -28,36 +26,30 @@ public class RecurringAppointment
     /**
      * @return the identifier of the appointment.
      */
-    public long getAppointmentId()
-    {
+    public long getAppointmentId() {
         return appointmentId;
     }
 
     /**
-     * @return string representing the days of the week. For the day of the week that the recurrence is on, an 'X'
-     *         character will be present. For days of the week that there is no recurrence, a space character will be
-     *         present.
+     * @return string representing the days of the week. For the day of the week that the
+     *         recurrence is on, an 'X' character will be present. For days of the week
+     *         that there is no recurrence, a space character will be present.
      * @deprecated use {@link #getWeeklyRecurrenceAsSet()} instead
      */
     @Deprecated
-    public String getWeeklyRecurrence()
-    {
+    public String getWeeklyRecurrence() {
         return recurrence;
     }
 
-    public Set<DayOfWeek> getWeeklyRecurrenceAsSet()
-    {
+    public Set<DayOfWeek> getWeeklyRecurrenceAsSet() {
         Set<DayOfWeek> daysOfWeekToReturn = new HashSet<DayOfWeek>();
-        for (int i = 0; i < recurrence.length(); i++)
-        {
+        for (int i = 0; i < recurrence.length(); i++) {
             char recurrenceChar = recurrence.charAt(i);
-            if (recurrenceChar != 'X')
-            {
+            if (recurrenceChar != 'X') {
                 continue;
             }
 
-            switch (i)
-            {
+            switch (i) {
                 case 0:
                     daysOfWeekToReturn.add(SUNDAY);
                     break;

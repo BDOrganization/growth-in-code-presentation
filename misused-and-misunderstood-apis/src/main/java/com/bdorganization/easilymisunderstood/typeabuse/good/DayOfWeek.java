@@ -1,8 +1,7 @@
 package com.bdorganization.easilymisunderstood.typeabuse.good;
 
 @SuppressWarnings("javadoc")
-public enum DayOfWeek
-{
+public enum DayOfWeek {
     SUNDAY,
     MONDAY,
     TUESDAY,

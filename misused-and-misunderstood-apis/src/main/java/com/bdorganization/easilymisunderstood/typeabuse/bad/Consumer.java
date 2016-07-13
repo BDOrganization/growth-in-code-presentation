@@ -1,30 +1,27 @@
 package com.bdorganization.easilymisunderstood.typeabuse.bad;
 
 @SuppressWarnings({ "javadoc", "nls" })
-public class Consumer
-{
+public class Consumer {
     /*
-     * There are really a few concerns that come out of this code. First, hopefully we have the casing correct. What if
-     * it was 'x' instead of 'X'. Another consideration that we have to deal with is whether or not the recurrence
-     * pattern started with SUNDAY or started with MONDAY.
+     * There are really a few concerns that come out of this code. First, hopefully we
+     * have the casing correct. What if it was 'x' instead of 'X'. Another consideration
+     * that we have to deal with is whether or not the recurrence pattern started with
+     * SUNDAY or started with MONDAY.
      * 
-     * There is also some cognitive friction here because most APIs (joda-time and Calendar) represent the day of the
-     * week as 1 - 7. However, we're pulling from index 0 - 6.
+     * There is also some cognitive friction here because most APIs (joda-time and
+     * Calendar) represent the day of the week as 1 - 7. However, we're pulling from index
+     * 0 - 6.
      */
 
-    public void consume(RecurringAppointment recurringAppointment)
-    {
+    public void consume(RecurringAppointment recurringAppointment) {
         String recurrence = recurringAppointment.getWeeklyRecurrence();
-        for (int i = 0; i < recurrence.length(); i++)
-        {
+        for (int i = 0; i < recurrence.length(); i++) {
             char recurrenceChar = recurrence.charAt(i);
-            if (recurrenceChar != 'X')
-            {
+            if (recurrenceChar != 'X') {
                 continue;
             }
 
-            switch (i)
-            {
+            switch (i) {
                 case 0:
                     System.out.println("ASSUME SUNDAY");
                     break;
