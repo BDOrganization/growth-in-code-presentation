@@ -795,9 +795,61 @@ public class Appointment
                         </pre>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>
+                                    We have many different concepts represented here:
+                                    <ul>
+                                        <li>Appointment</li>
+                                        <li>Organizer</li>
+                                        <li>Room</li>
+                                        <li>Schedule of the appointment</li>
+                                    </ul>
+                                </li>
+                                <li>It MAY BE true that there may only ever be one room for an Appointment, but that does not mean you should not encapsulate from the start</li>
+                                <li>Encapsulation is not just for things that you want to put in a list</li>
+                            </ul>
                         </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Code With Encapsulation</h2>
+                        <pre>
+                            <code data-trim>
+public class Appointment
+{
+    private long appointmentId;
+    private String description;
+    private Organizer organizer;
+    private Room room;
+    private Schedule schedule;
+
+    // getters and setters (because there is too many fields for a constructor)
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>We have represented the different concepts as objects</li>
+                                <li>We have freedom to swap out different scheduling algorithms and never have to touch this class</li>
+                                <li>Tests are simplified to only 5 fields now</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Code Study - Class "A"</h2>
+                        <ul>
+                            <li>Class was first created in 2007 (on that fateful day)</li>
+                            <li>Part of a core functionality</li>
+                            <li>Attempted no encapsulation (aside from 1 object that already existed)</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="images/class-growth-per-year.png" height=500 width=900 />
+                    </section>
+
+                    <section>
+                        <img src="images/releases-by-year-for-project-containing-class-a.png" height=500 width=900 />
                     </section>
 
                 </section>
