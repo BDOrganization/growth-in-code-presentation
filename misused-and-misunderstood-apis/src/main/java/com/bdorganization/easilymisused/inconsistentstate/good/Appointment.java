@@ -50,10 +50,10 @@ public class Appointment
 
     /**
      * @return all of the participants in the appointment. This list of participants could be empty but will never be
-     *         {@code null}.
+     *         {@code null}. Modifying the returned List will not change the internal state of this class.
      */
     public List<Participant> getParticipants()
     {
-        return participants;
+        return new ArrayList<>(participants);
     }
 }
