@@ -591,17 +591,20 @@ for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)
                     <section data-background-color="#4d7e65">
                         <h2>Abstraction Leaks</h2>
                         <img src="http://i.imgur.com/YJJJ4b2.png" height=233 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
                     <section>
                         <h2>Abstraction Leaks</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>
+                                Complicates future migration efforts to new technology/implementation
+                                <ul>
+                                    <li>Likely requires painful non-passive API changes</li>
+                                    <li>May prevent uplifting to new technology necessary to support growth</li>
+                                    <li>May make existing API's awkward/confusing if not replaced</li>
+                                </ul>
+                            </li>
+                            <li>May reveal avenues for attackers to exploit</li>
+                            <li>Can unnecessarily complicate consumer understanding (if level of detail is inappropriate)</li>
                         </ul>
                         <aside class="notes">
                             <ul>
@@ -610,17 +613,64 @@ for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)
                         </aside>
                     </section>
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Common Extraction Leak Examples</h2>
                         <pre>
-                            <code data-trim>
-// code goes here with no additional spaces
+                            <code data-trim data-noescape>
+public interface AppointmentManager {
+    AppointmentRemoveStatus removeAppointment(Appointment appointment)
+            <mark>throws SQLException</mark>;
+
+    // Note the <mark>Database</mark> reference in the method name...
+    AppointmentRemoveStatus removeAppointmentFromDatabase(Appointment appointment);
+
+    /**
+     * Removes the appointment from appointments table in the <mark>database</mark> where the
+     * {@code appointmentId} matches app_id.
+     * 
+     * @param appointmentId
+     *            The id matching the app_id in the appointments table.
+     * @return the status of the removal.
+     */
+    AppointmentRemoveStatus removeAppointment(long appointmentId);
+}
                             </code>
                         </pre>
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Common Extraction Leak Examples</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public interface AppointmentManager {
+    // Note the <mark>Button</mark> reference in the method name...
+    AppointmentRemoveStatus removeButtonClicked();
+
+    /**
+     * Removes the specified appointment.
+     * 
+     * @param appointment
+     *            The appointment to be removed.
+     * @return the status of the appointment removal. This will be formatted as a <mark>JSON</mark>
+     *         <mark>string</mark> with a property called {@code status} and a value of either
+     *         {@code SUCCESS} or {@code FAILURE}.
+     */
+    String removeSingleAppointment(Appointment appointment);
+}
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <h2>Common Abstraction Leak Indicators</h2>
+                        <ul>
+                            <li>Database concepts, table/field references</li>
+                            <li>Data formats which are too low-level for the current API</li>
+                            <li>
+                                UI concepts specific to your current implementation
+                                <ul>
+                                    <li>UI controls like buttons, checkboxes, hyperlinks, etc</li>
+                                    <li>UI frameworks; watch your APIs AND import statements</li>
+                                </ul>
+                            </li>
+                        </ul>
                     </section>
                 </section>
                 <section>
