@@ -17,16 +17,19 @@ import com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfW
 public class DayOfWeekTranslator
 {
 
-    public Set<DayOfWeek> translateDaysOfWeek(Set<Integer> daysOfWeek)
+    public Set<DayOfWeek> translateDaysOfWeek(String daysOfWeek)
     {
-        Set<DayOfWeek> listToReturn = new HashSet<DayOfWeek>(daysOfWeek.size());
-
-        for (Integer singleDayOfWeek : daysOfWeek)
+        Set<DayOfWeek> weeklyRecurrence = new HashSet<DayOfWeek>();
+        for (int i = 0; i < daysOfWeek.length(); i++)
         {
-            listToReturn.add(translateDayOfWeek(singleDayOfWeek));
-        }
+            if (daysOfWeek.charAt(i) != 'X')
+            {
+                continue;
+            }
 
-        return listToReturn;
+            weeklyRecurrence.add(translateDayOfWeek(i));
+        }
+        return weeklyRecurrence;
     }
 
     public DayOfWeek translateDayOfWeek(int dayOfWeek)
@@ -34,21 +37,21 @@ public class DayOfWeekTranslator
         switch (dayOfWeek)
         {
             case 0:
-                return (SUNDAY);
+                return SUNDAY;
             case 1:
-                return (MONDAY);
+                return MONDAY;
             case 2:
-                return (TUESDAY);
+                return TUESDAY;
             case 3:
-                return (WEDNESDAY);
+                return WEDNESDAY;
             case 4:
-                return (THURSDAY);
+                return THURSDAY;
             case 5:
-                return (FRIDAY);
+                return FRIDAY;
             case 6:
-                return (SATURDAY);
+                return SATURDAY;
             default:
-                throw new RuntimeException("Unrecognized day of week");
+                throw new RuntimeException("unexpected day of week");
         }
     }
 }
