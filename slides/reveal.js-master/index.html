@@ -250,6 +250,79 @@ public class RecurringAppointmentWrapper {
                             </ul>
                         </aside>
                     </section>
+                    <section data-state="slide-with-code">
+                        <h2>Transition Example (Utility)</h2>
+                        <pre>
+                            <code data-trim>
+// code goes here with no additional spaces
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>A final transition example here is to take the messy/error-prone work out of consumers hands by providing them with a utility to do the work.</li>
+                                <li></li>
+                        </aside>
+                    </section>
+                </section>
+                <section>
+                    <section data-background-color="#4d7e65">
+                        <h2>Easily Misused Collections API's</h2>
+                        <img src="http://i.imgur.com/ZWCUEOD.png" height=350 width=279 />
+                    </section>
+                    <section>
+                        <h2>Easily Misused Collections API's</h2>
+                        <ul>
+                            <li>DON'T return NULL collections</li>
+                            <li>Growth in API consumption leads to LOTS of avoidable null checks</li>
+                            <li>Someone absolutely WILL forget a null check somewhere</li>
+                            <li>Iteration over returned collections is primary use-case; be nice to your consumers</li>
+                            <li>ABSOLUTELY documented how the API behaves, even if you are evil</li>
+                        </ul>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Evil Collections API Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public class AppointmentManager {
+    /**
+     * Returns a collection of the available {@link Date}s that an appointment could
+     * begin based on the date provided. If no appointment begin times can be found,
+     * <mark>{@code null}</mark> will be returned.
+     * 
+     * @param startTime
+     *            The first possible start date. This value will be used to determine
+     *            the available begin dates.
+     * @return a list of the available appointment begin dates.
+     */
+    public Collection&lt;Date&gt; getAvailableBeginTimes(Date startDate, Date endTime) {
+        // logic!
+    }
+}
+                            </code>
+                        </pre>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Good Collections API Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public class AppointmentManager {
+    /**
+     * Returns a collection of the available {@link Date}s that an appointment could
+     * begin based on the date provided. If no appointment begin times can be found,
+     * <mark>an empty collection</mark> will be returned.
+     * 
+     * @param startTime
+     *            The first possible start date. This value will be used to determine
+     *            the available begin dates.
+     * @return a list of the available appointment begin dates.
+     */
+    public Collection&lt;Date&gt; getAvailableBeginTimes(Date startDate, Date endTime) {
+        // logic!
+    }
+}
+                            </code>
+                        </pre>
+                    </section>
                 </section>
             </div>
         </div>
