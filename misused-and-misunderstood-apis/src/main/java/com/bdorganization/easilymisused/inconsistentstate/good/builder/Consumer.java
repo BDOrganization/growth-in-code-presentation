@@ -17,7 +17,7 @@ public class Consumer {
      * an exception because the Participants is massaged to an empty value.
      */
     public void consumeBuilder() {
-        Appointment.Builder builder = new Appointment.Builder();
+        Builder builder = new DefaultAppointment.DefaultBuilder();
         builder.description("appointment 1");
         builder.id(2);
         Appointment appointment = builder.build();
@@ -26,8 +26,16 @@ public class Consumer {
         consumeParticipants(appointment);
     }
 
+    public void consumeBuilderChaining() {
+        Appointment appointment = new DefaultAppointment.DefaultBuilder()
+                .description("appointment 1").id(2).build();
+
+        consume(appointment);
+        consumeParticipants(appointment);
+    }
+
     public void consumeBuilderAllFields(List<Participant> participants) {
-        Appointment.Builder builder = new Appointment.Builder();
+        Builder builder = new DefaultAppointment.DefaultBuilder();
         builder.description("appointment 1");
         builder.id(2);
         builder.participants(participants);

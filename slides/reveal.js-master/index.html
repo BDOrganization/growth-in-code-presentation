@@ -297,7 +297,7 @@ public class DayOfWeekTranslator {
                             <li>Growth in API consumption leads to LOTS of avoidable null checks</li>
                             <li>Someone absolutely WILL forget a null check somewhere</li>
                             <li>Iteration over returned collections is primary use-case; be nice to your consumers</li>
-                            <li>ABSOLUTELY documented how the API behaves, even if you are evil</li>
+                            <li>ABSOLUTELY document how the API behaves, even if you are evil</li>
                         </ul>
                     </section>
                     <section data-state="slide-with-code">
@@ -369,42 +369,258 @@ for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)
                         </pre>
                     </section>
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Inconsistent State</h2>
                         <img src="http://i.imgur.com/PoMGuCG.png" height=263 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
+
                     <section>
-                        <h2>Inconsistent State</h2>
+                        <h2>Reasoning About Inconsistent State</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>Will the data be validated the same for setter and constructor?</li>
+                            <li>Can the data change after construction (is it mutable)?</li>
+                            <ul>
+                                <li>Collections and dates tend to unintentionally expose mutability</li>
+                            </ul>
                         </ul>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>These two tend to go together (though they are different concepts).  We will mostly talk about them together.</li>
+                            </ul>
                         </aside>
                     </section>
+
+                    <section>
+                        <h2>Stopping Inconsistent State</h2>
+                        <ul>
+                            <li>Be clear in documenting possible field states</li>
+                            <ul>
+                                <li>Can this field be null?</li>
+                                <li>Can this collection be empty or null?</li>
+                            </ul>
+                            <li>Enforce state consistently</li>
+                            <li>Do not force consumers to handle impossible scenarios</li>
+                            <li>Prefer immutability when possible</li>
+                        </ul>
+                        <aside class="notes">
+                            <ul>
+                                <li>Enforce state consistently</li>
+                                <ul>
+                                    <li>Do not enforce non-null values in setter, but allow them in the constructor</li>
+                                    <li>Allow consumers to confidently reason about the contract</li>
+                                </ul>
+                                <li>Do not force consumers to handle impossible scenarios</li>
+                                <ul>
+                                    <li>if an appointment's descritpion can't be null, don't make a consumer figure out how to handle that</li>
+                                </ul>
+                            </ul>
+                        </aside>
+                    </section>
+
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Inconsistent State Example</h2>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public interface Appointment {
+    long getId();
+    void setId(long id);
+
+    String getDescription();
+    void setDescription(String description);
+
+    List&lt;Participant&gt; getParticipants();
+    void setParticipants(List&lt;Participant&gt; participants);
+}
                             </code>
                         </pre>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>All getters have a corresponding setter</li>
+                                <li>State can change on this object at any time, meaning we can never trust the state</li>
+                            </ul>
                         </aside>
                     </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Inconsistent State</h2>
+                        <pre>
+                            <code data-trim>
+if (appointment.getDescription() != null) {
+    System.out.println("Appointment Description Length: ");
+    System.out.println(appointment.getDescription().length());
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>Still not safe, this can throw a NullPointerException</li>
+                                <li>Multiple threads could cause the null check to pass but the description to be null</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consistent State Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public interface Appointment {
+    // Omitted javadoc
+    long getId();
+
+    /**
+     * @return the description for the appointment. This value will <mark>never</mark>
+     *         <mark>be {@code null}.</mark>
+     */
+    String getDescription();
+
+    /**
+     * @return all of the participants in the appointment. This list of participants 
+     *         could be empty but will <mark>never be {@code null}.</mark> Modifying the returned 
+     *         list will not change the internal state of this class.
+     */
+    List&lt;Participant&gt; getParticipants();
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>Ensures that the values can never be null</li>
+                                <li>Ensures that the values can never be changed after construction</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consistent State Implementation Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public DefaultAppointment(long id, String description,
+        List&lt;Participant&gt; participants) {
+    this.id = id;
+
+    throwIllegalArgumentExceptionIfNull(description);
+    this.description = description;
+    this.participants = participants == null ? new ArrayList&lt;Participant&gt;(0)
+            : new ArrayList&lt;Participant&gt;(participants);
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>No more setters removes most ways of adding inconsistent state</li>
+                                <li>We need to ensure the contructor adheres to the requirement too</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consistent State Consumer</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public void consume(Appointment appointment) {
+    System.out.println("Appointment Description Length: ");
+    System.out.println(appointment.getDescription().length());
+}
+                            </code>
+
+                            <code data-trim data-noescape>
+public void consumeParticipants(Appointment appointment) {
+    for (Participant participant : appointment.getParticipants()) {
+        System.out.println("Participant: " + participant.getName());
+    }
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>No more need for null checking, the description and participants can NEVER be null</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Constructor Downfalls</h2>
+                        <ul>
+                            <li>Growth in model objects makes constructors difficult to use</li>
+                            <ul>
+                                <li>Ordering of the fields is not intuitive</li>
+                                <li>Permutations of the fields causes an explosion in constructor count (telescoping)</li>
+                            </ul>
+                        </ul>
+                        <aside class="notes">
+                            <ul>
+                                <li>ordering of the fields is not intuitive</li>
+                                <ul>
+                                    <li>Was it appointment id first or participant id?</li>
+                                </ul>
+                                <li>Permutations of the fields causes an explosion in constructor count</li>
+                                <ul>
+                                    <li>This is no different than a method with many fields (which we will cover in an upcoming section)</li>
+                                </ul>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>Builders Can Help</h2>
+                        <ul>
+                            <li>Able to enforce consistency before construction (in the build method)</li>
+                            <li>Parameters are associated to a method with the name (instead of a parameter order)</li>
+                            <li>Builders support all possible permutations of the specified fields</li>
+                        </ul>
+                        <aside class="notes">
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Builder API</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public interface Builder {
+    Builder id(long id);
+    Builder description(String description);
+    Builder participants(List<Participant> participants);
+    Appointment build();
+}
+                            </code>
+                            <code data-trim data-noescape>
+public interface Appointment {
+    long getId();
+    String getDescription();
+    List<Participant> getParticipants();
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>All "mutator" methods return the builder, allowing (but not requiring) chained calls</li>
+                                <li>The builder is mutable, but the returned Appointment object can not be modified</li>
+                                <li>mutator methods match the getter methods (but omit the "get")
+                            </ul>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Builder Consumer Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+Appointment appointment = new Appointment.Builder().description("appointment 1")
+                                                   .id(2).build();
+                            </code>
+                            <code data-trim data-noescape>
+Builder builder = new Appointment.Builder();
+builder.description("appointment 1");
+builder.id(2);
+Appointment appointment = builder.build();
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                        </aside>
+                    </section>
+
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Weak Typing</h2>

@@ -6,54 +6,50 @@ import java.util.List;
 import com.bdorganization.easilymisused.inconsistentstate.common.Participant;
 
 @SuppressWarnings({ "javadoc", "nls" })
-public class Appointment
-{
+public class DefaultAppointment implements Appointment {
     private final long id;
     private final String description;
     private final List<Participant> participants;
 
-    public Appointment(long id, String description, List<Participant> participants)
-    {
+    public DefaultAppointment(long id, String description,
+            List<Participant> participants) {
         this.id = id;
 
-        if (description == null)
-        {
-            throw new IllegalArgumentException("description cannot be null");
-        }
+        throwIllegalArgumentExceptionIfNull(description);
         this.description = description;
+        this.participants = participants == null ? new ArrayList<Participant>(0)
+                : new ArrayList<Participant>(participants);
+    }
 
-        if (participants == null)
-        {
-            this.participants = new ArrayList<>();
-        }
-        else
-        {
-            this.participants = new ArrayList<>(participants);
+    private void throwIllegalArgumentExceptionIfNull(String description) {
+        if (description == null) {
+            throw new IllegalArgumentException("description cannot be null");
         }
     }
 
     /**
      * @return the identifier of the appointment.
      */
-    public long getId()
-    {
+    @Override
+    public long getId() {
         return id;
     }
 
     /**
      * @return the description for the appointment. This value will never be {@code null}.
      */
-    public String getDescription()
-    {
+    @Override
+    public String getDescription() {
         return description;
     }
 
     /**
-     * @return all of the participants in the appointment. This list of participants could be empty but will never be
-     *         {@code null}. Modifying the returned List will not change the internal state of this class.
+     * @return all of the participants in the appointment. This list of participants could
+     *         be empty but will never be {@code null}. Modifying the returned List will
+     *         not change the internal state of this class.
      */
-    public List<Participant> getParticipants()
-    {
+    @Override
+    public List<Participant> getParticipants() {
         return new ArrayList<>(participants);
     }
 }
