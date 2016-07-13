@@ -12,8 +12,8 @@
         <!-- Custom CSS used to tweak theme -->
         <link rel="stylesheet" href="css/custom.css">
 
-        <!-- Theme used for syntax highlighting of code -->
-        <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- Theme used for syntax highlighting of code; try switching to zenburn.css if comments don't show well -->
+        <link rel="stylesheet" href="lib/css/monokai-sublime.css">
 
         <!-- Printing and PDF exports -->
         <script>
@@ -41,6 +41,12 @@
                         <li>Many intelligent engineers don't always think in terms of APIs</li>
                         <li>Daily design decisions have long-reaching impacts</li>
                     </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </aside>
                 </section>
                 <section>
                     <h2>Why Should You Consider Listening to Us?</h2>
@@ -68,21 +74,21 @@
                 </section>
                 <section>
                     <section data-background-color="#4d7e65">
-                        <h2>Incorrect Data Types / Data Type Abuse</h2>
+                        <h2>Poor Data Types / Data Type Abuse</h2>
                         <img src="http://i.imgur.com/XC08aVV.png" height=259 width=350 />
                     </section>
                     <section>
-                        <h2>Incorrect Data Types / Data Type Abuse</h2>
+                        <h2>Poor Data Types / Data Type Abuse</h2>
                         <ul>
                             <li>Easy to misuse / Difficult to understand without additional doc</li>
                             <li>Lack proper means of validation, or at least complicate it</li>
                             <li>Place unnecessary burden on consumers (if they must parse or translate)</li>
                         </ul>
                     </section>
-                    <section data-state='slide-with-code'>
+                    <section data-state="slide-with-code"'">
                         <h2>Poor Data Type Example</h2>
                         <pre>
-                            <code class="Java" data-trim data-noescape>
+                            <code data-trim>
 public interface RecurringAppointment {
     /**
      * @return a string representing the days of the week. For the day of the week that
@@ -97,6 +103,152 @@ public interface RecurringAppointment {
 }
                             </code>
                         </pre>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Poor Data Type Example</h2>
+                        <pre>
+                            <code data-trim>
+public void consume(RecurringAppointment recurringAppointment) {
+    String recurrence = recurringAppointment.getWeeklyRecurrence();
+    for (int i = 0; i < recurrence.length(); i++) {
+        char recurrenceChar = recurrence.charAt(i);
+        if (recurrenceChar != 'X') {
+            continue;
+        }
+        switch (i) {
+            case 0:
+                System.out.println("ASSUME SUNDAY");
+                break;
+            case 1:
+                System.out.println("ASSUME MONDAY");
+                break;
+            ...
+        }
+    }
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>The doc didn't indicate if case-sensitive, so cross your fingers!</li>
+                                <li>Awkward zero-based indexing used for parsing days of week; Relies on API doc to indicate that it starts with Sunday vs Monday</li>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Good Data Type Example</h2>
+                        <pre>
+                            <code data-trim>
+public enum DayOfWeek {
+    SUNDAY,
+    MONDAY,
+    ...
+}
+
+public interface RecurringAppointment {
+    /**
+     * @return the days of the week for which this appointment occurs.
+     */
+    Set&lt;DayOfWeek&gt; getWeeklyRecurrence();
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Good Data Type Example</h2>
+                        <pre>
+                            <code data-trim>
+public void consume(RecurringAppointment recurringAppointment) {
+    for (DayOfWeek dayOfWeek : recurringAppointment.getWeeklyRecurrence()) {
+        switch (dayOfWeek) {
+            case SUNDAY:
+                System.out.println("DEFINITELY SUNDAY");
+                break;
+            case MONDAY:
+                System.out.println("DEFINITELY MONDAY");
+                break;
+            ...
+        }
+    }
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Transition Example (Deprecation)</h2>
+                        <pre>
+                            <code data-trim>
+@Deprecated
+public String getWeeklyRecurrence() {
+    return recurrence;
+}
+
+public Set&lt;DayOfWeek&gt; getWeeklyRecurrenceAsSet() {
+    Set&lt;DayOfWeek&gt; daysOfWeekToReturn = new HashSet&lt;DayOfWeek&gt;();
+    for (int i = 0; i < recurrence.length(); i++) {
+        // logic to check char for non 'X' here...
+        switch (i) {
+            case 0:
+                daysOfWeekToReturn.add(SUNDAY);
+                break;
+            ...
+        }
+    }
+    return daysOfWeekToReturn;
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>The example shown here is a non-passive change, however, as it replaces the getWeeklyRecurrence method's return type with a Set of DayOfWeek enum values</li>
+                                <li>One passive transition option would be to add new API, such as 'getWeeklyRecurrenceAsSet' and have the implementation handle the messy details of translating the existing poor data type to the new good data type.</li>
+                        </aside>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Transition Example (Wrapper)</h2>
+                        <pre>
+                            <code data-trim>
+public class RecurringAppointmentWrapper {
+    private final RecurringAppointment recurringAppointment;
+
+    public RecurringAppointmentWrapper(RecurringAppointment recurringAppointment) {
+        this.recurringAppointment = recurringAppointment;
+    }
+
+    public long getAppointmentId() {
+        // Would have to proxy each method exposed by RecurrentAppointment...
+        return recurringAppointment.getAppointmentId();
+    }
+
+    public Set&lt;DayOfWeek&gt; getWeeklyRecurrence() {
+        ...
+    }
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <p>Benefits...</p>
+                            <ul>
+                                <li>Another passive transition would be to wrap the existing RecurringAppointment class with a new class that provides the desired API.</li>
+                                <li>Results in less confusion and likely less defects once in use over the original class.</li>
+                                <li>When functionality to replace is large, we may not have time to completely refactor. This approach provides consumers with a good API without creating even more debt to pay off in the future.</li>
+                            </ul>
+                            <p>Downsides...</p>
+                            <ul>
+                                <li>Each method necessary from the original class will have to be proxied through the wrapper.</li>
+                                <li>If other APIs require usage of the original RecurringAppointment class, we'd have to expose API to get an instance of it from the wrapper.</li>
+                                <li>Naming for these classes can be hard/awkward, as the best name may have already been taken by the original class.</li>
+                            </ul>
+                        </aside>
                     </section>
                 </section>
             </div>
@@ -118,7 +270,16 @@ public interface RecurringAppointment {
                     { src: 'plugin/markdown/markdown.js' },
                     { src: 'plugin/notes/notes.js', async: true },
                     { src: 'plugin/zoom-js/zoom.js', async: true },
-                    { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                    { 
+                        src: 'plugin/highlight/highlight.js', 
+                        async: true, 
+                        callback: function() {
+                            hljs.configure({
+                                languages: ['java']
+                            });
+                            hljs.initHighlightingOnLoad(); 
+                        } 
+                    }
                 ]
             });
         </script>
