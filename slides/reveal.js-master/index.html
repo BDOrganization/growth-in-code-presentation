@@ -756,32 +756,41 @@ public void consume(Appointment appointment) {
                     </section>
                 </section>
                 <section>
+
                     <section data-background-color="#4d7e65">
                         <h2>Lack of Encapsulation</h2>
                         <img src="http://i.imgur.com/O2wXo9I.png" height=304 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
+
                     <section>
                         <h2>Lack of Encapsulation</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>Makes it difficult to re-use concepts</li>
+                            <li>New implementations of concepts can never be passively introduced</li>
+                            <li>Causes explosion in methods, fields, and test data</li>
                         </ul>
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
+
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Code With No Encapsulation</h2>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public class Appointment
+{
+    private long appointmentId;
+    private String description;
+    private long organizerId;
+    private String organizerName;
+    private long roomId;
+    private String roomDescription;
+    private boolean doesRoomHaveProjector;
+    private Date beginTime;
+    private Date endTime;
+    private Set&lt;DayOfWeek&gt; weeklyRecurrence;
+    private Set&lt;MonthOfYear&gt; monthlyRecurrence;
+
+    // getters and setters (because there is too many fields for a constructor)
+}
                             </code>
                         </pre>
                         <aside class="notes">
@@ -790,7 +799,9 @@ public void consume(Appointment appointment) {
                                 <li></li>
                         </aside>
                     </section>
+
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Growing Parameter List</h2>
