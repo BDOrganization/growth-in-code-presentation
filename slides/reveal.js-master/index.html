@@ -578,35 +578,54 @@ public void consume(Appointment appointment) {
                     <section data-background-color="#4d7e65">
                         <h2>Growing Parameter List</h2>
                         <img src="http://i.imgur.com/DXZRJY7.png" height=263 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
                     <section>
                         <h2>Growing Parameter List</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>Can lead to an explosion of overloaded methods (in the interest of passivity)</li>
+                            <li>
+                                Difficult/Painful to consume
+                                <ul>
+                                    <li>Increased liklihood of errors due to specifying params in incorrect order</li>
+                                    <li>Hard to remember what each value represents, particularly if not strongly typed</li>
+                                    <li>Hard to find correct version of method to call for each use-case</li>
+                                </ul>
+                            </li>
                         </ul>
                         <aside class="notes">
                             <ul>
                                 <li></li>
                                 <li></li>
+                            </ul>
                         </aside>
                     </section>
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Poor Handling of Growing Params</h2>
+                        <p>Initial release of API</p>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public interface AppointmentManager {
+    List&lt;Appointment&gt; getAppointments(long appointmentId);
+}
                             </code>
                         </pre>
+                        <p>Follow-up release of API</p>
+                        <pre>
+                            <code data-trim>
+public interface AppointmentManager {
+    List&lt;Appointment&gt; getAppointments(long appointmentId);
+
+    List&lt;Appointment&gt; getAppointments(long appointmentId, long participantId,
+            Date beginDate, Date endDate);
+}
+                            </code>
+                        </pre>
+                        <p>...and the cycle continues through the years</p>
                         <aside class="notes">
                             <ul>
                                 <li></li>
                                 <li></li>
+                            </ul>
                         </aside>
                     </section>
                 </section>
