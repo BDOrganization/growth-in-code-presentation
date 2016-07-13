@@ -374,7 +374,7 @@ for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Inconsistent State</h2>
-                        <img src="http://i.imgur.com/PoMGuCG.png" height=263 width=350 />
+                        <img src="images/not-sure-fry-not-sure-about-immutability.png" height=263 width=350 />
                     </section>
 
                     <section>
@@ -791,11 +791,14 @@ public void consume(Appointment appointment) {
                         </aside>
                     </section>
                 </section>
+
                 <section>
+                    
                     <section data-background-color="#4d7e65">
                         <h2>Growing Parameter List</h2>
                         <img src="images/the-number-of-params-is-too-damn-high.png" height=263 width=350 />
                     </section>
+
                     <section>
                         <h2>Growing Parameter List</h2>
                         <ul>
@@ -811,11 +814,12 @@ public void consume(Appointment appointment) {
                         </ul>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>When param lists include several occurrences of the same types, it is incredibly easy to specify the values out of order.</li>
+                                <li>ASK THE AUDIENCE to raise hands if they've ever been in that situation...</li>
                             </ul>
                         </aside>
                     </section>
+
                     <section data-state="slide-with-code">
                         <h2>Poor Handling of Growing Params</h2>
                         <p>Initial release of API</p>
@@ -840,12 +844,96 @@ public interface AppointmentManager {
                         <p>...and the cycle continues through the years</p>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>Upon initial release, the API may have started out simple, with perhaps a single parameter...</li>
+                                <li>Over time, the list of parameters may begin to increase. To remain passive, we overload the API and create various combinations of those parameters.</li>
+                                <li>This cycle can continue until things get ridiculous if not addressed in a different manner, however.</li>
                             </ul>
                         </aside>
                     </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Introduce Parameter Object</h2>
+                        <p>An object in which closely related parameters are encapsulated together. More info <a href="http://refactoring.com/catalog/introduceParameterObject.html" target="_blank">here</a>.</p>
+                        <pre>
+                            <code data-trim>
+public class AppointmentRetrievalCriteria {
+    private final long appointmentId;
+    private final long participantId;
+    private final Date beginDate;
+    private final Date endDate;
+
+    public AppointmentRetrievalCriteria(Builder builder) {...}
+    public long getAppointmentId() {...}
+    public long getParticipantId() {...}
+    public Date getBeginDate() {...}
+    public Date getEndDate() {...}
+
+    public static class Builder {
+        ...
+        public AppointmentRetrievalCriteria build() {...}
+    }
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>This example shows a new AppointmentRetrievalCriteria object which represents a collection of related parameters used for retrieving appointments.</li>
+                                <li>Rather than continue to either make non-passive changes or to overload the methods in the AppointmentManager API we were just looking at, this approach allows us to introduce one last API change that should grow more gracefully over time.</li>
+                                <li>If you were to deprecate the existing API's and update their implementations to use this method internally, you have a completely passive change for any consumer which is not writing their own implementation of your interface.</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consume Parameter Object (All Values)</h2>
+                        <pre>
+                            <code data-trim>
+public void consumeAndSpecifyAllValues() {
+    AppointmentRetrievalCriteria.Builder builder = 
+            new AppointmentRetrievalCriteria.Builder();
+ 
+    // Could instead chain these builder methods...
+    builder.appointmentId(1L);
+    builder.participantId(2L);
+    builder.beginDate(new Date(1000L));
+    builder.endDate(new Date(2000L));
+
+    appointmentManager.getAppointments(builder.build());
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>This example utilizes the Builder pattern that we previously talked about and specifies all values.</li>
+                                <li>Note that you could also chain these method calls, as is typical with builders.</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consume Parameter Object (Required Values)</h2>
+                        <pre>
+                            <code data-trim>
+public void consumeAndSpecifyRequiredValues() {
+    AppointmentRetrievalCriteria.Builder builder = 
+            new AppointmentRetrievalCriteria.Builder();
+    builder.appointmentId(1L);
+    builder.beginDate(new Date(1000L));
+
+    appointmentManager.getAppointments(builder.build());
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>One of the major benefits with refactoring to utilize a parameter object is that you are now free to add non-required fields in a passive manner.</li>
+                                <li>ONLY in cases where a new required field is introduced (and which CANNOT have a default value provided on behalf of the consumer) are there non-passive changes.</li>
+                            </ul>
+                        </aside>
+                    </section>
+
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Unnecessarily Restrictive Collections API's</h2>
