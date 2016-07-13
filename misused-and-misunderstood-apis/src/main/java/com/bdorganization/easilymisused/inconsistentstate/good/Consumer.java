@@ -27,6 +27,11 @@ public class Consumer
      * This is enforced through the constructor as well. For loops are a very easy situation to accidentally introduce a
      * potential null pointer exception simply because the code does not show a direct call against the list to get the
      * iterator ({@link List#iterator()}), however, it is implied.
+     * 
+     * The Appointment class even goes a step further and ensures immutability. This ensures that the list of
+     * participants being modified will not modify the internal state of the Appointment class.
+     * 
+     * See builder nuances guide for more information.
      */
     public void consumeParticipants(Appointment appointment)
     {

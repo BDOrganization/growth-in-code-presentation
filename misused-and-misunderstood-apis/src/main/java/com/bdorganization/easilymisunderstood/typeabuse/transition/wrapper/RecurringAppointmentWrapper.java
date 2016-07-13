@@ -1,11 +1,17 @@
 package com.bdorganization.easilymisunderstood.typeabuse.transition.wrapper;
 
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.FRIDAY;
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.MONDAY;
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.SATURDAY;
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.SUNDAY;
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.THURSDAY;
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.TUESDAY;
+import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.WEDNESDAY;
+
 import java.util.HashSet;
 import java.util.Set;
 
 import com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek;
-
-import static com.bdorganization.easilymisunderstood.typeabuse.transition.common.DayOfWeek.*;
 
 @SuppressWarnings({ "javadoc" })
 public class RecurringAppointmentWrapper {
@@ -55,8 +61,7 @@ public class RecurringAppointmentWrapper {
         Set<DayOfWeek> daysOfWeekToReturn = new HashSet<DayOfWeek>();
         String recurrence = recurringAppointment.getWeeklyRecurrence();
         for (int i = 0; i < recurrence.length(); i++) {
-            char recurrenceChar = recurrence.charAt(i);
-            if (recurrenceChar != 'X') {
+            if (recurrence.charAt(i) != 'X') {
                 continue;
             }
 

@@ -44,8 +44,7 @@ public class RecurringAppointment {
     public Set<DayOfWeek> getWeeklyRecurrenceAsSet() {
         Set<DayOfWeek> daysOfWeekToReturn = new HashSet<DayOfWeek>();
         for (int i = 0; i < recurrence.length(); i++) {
-            char recurrenceChar = recurrence.charAt(i);
-            if (recurrenceChar != 'X') {
+            if (recurrence.charAt(i) != 'X') {
                 continue;
             }
 
