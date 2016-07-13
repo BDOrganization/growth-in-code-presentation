@@ -111,8 +111,7 @@ public interface RecurringAppointment {
 public void consume(RecurringAppointment recurringAppointment) {
     String recurrence = recurringAppointment.getWeeklyRecurrence();
     for (int i = 0; i < recurrence.length(); i++) {
-        char recurrenceChar = recurrence.charAt(i);
-        if (recurrenceChar != 'X') {
+        if (recurrence.charAt(i) != 'X') {
             continue;
         }
         switch (i) {
@@ -225,7 +224,7 @@ public class RecurringAppointmentWrapper {
     }
 
     public long getAppointmentId() {
-        // Would have to proxy each method exposed by RecurrentAppointment...
+        // Would have to proxy each method exposed by RecurringAppointment...
         return recurringAppointment.getAppointmentId();
     }
 
@@ -254,13 +253,35 @@ public class RecurringAppointmentWrapper {
                         <h2>Transition Example (Utility)</h2>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public class DayOfWeekTranslator {
+    public Set&lt;DayOfWeek&gt; translateDaysOfWeek(String daysOfWeek) {
+        Set&lt;DayOfWeek&gt; weeklyRecurrence = new HashSet&lt;DayOfWeek&gt;();
+        for (int i = 0; i < daysOfWeek.length(); i++) {
+            if (daysOfWeek.charAt(i) != 'X') {
+                continue;
+            }
+
+            weeklyRecurrence.add(translateDayOfWeek(i));
+        }
+        return weeklyRecurrence;
+    }
+}
                             </code>
                         </pre>
                         <aside class="notes">
+                            <p>Benefits...</p>
                             <ul>
-                                <li>A final transition example here is to take the messy/error-prone work out of consumers hands by providing them with a utility to do the work.</li>
-                                <li></li>
+                                <li>Passive approach...</li>
+                                <li>Abstracts away messy/error-prone work to interact with bad data type.</li>
+                                <li>With multiple consumers, no need for each to recreate this logic.</li>
+                                <li>Example abstracts away the switch/case logic to translateDayOfWeek method.</li>
+                            </ul>
+                            <p>Downsides...</p>
+                            <ul>
+                                <li>Usage of utility can't be enforced.</li>
+                                <li>Consumers may not even know of its existance.</li>
+                                <li>Usage of poor data type still exist within code base.</li>
+                            </ul>
                         </aside>
                     </section>
                 </section>
@@ -302,6 +323,20 @@ public class AppointmentManager {
                         </pre>
                     </section>
                     <section data-state="slide-with-code">
+                        <h2>Consuming Evil Collections API Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+Collection&lt;Date&gt; dates = appointmentManager.getAvailableBeginTimes(new Date(), 
+                pastDate);
+<mark>if (dates != null)</mark> {
+    for (Date date : dates) {
+        System.out.println("Available time for appointment: " + date);
+    }
+}
+                            </code>
+                        </pre>
+                    </section>
+                    <section data-state="slide-with-code">
                         <h2>Good Collections API Example</h2>
                         <pre>
                             <code data-trim data-noescape>
@@ -319,6 +354,16 @@ public class AppointmentManager {
     public Collection&lt;Date&gt; getAvailableBeginTimes(Date startDate, Date endTime) {
         // logic!
     }
+}
+                            </code>
+                        </pre>
+                    </section>
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Good Collections API Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)) {
+    System.out.println("Available time for appointment: " + date);
 }
                             </code>
                         </pre>
