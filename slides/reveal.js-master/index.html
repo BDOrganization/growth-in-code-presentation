@@ -1327,6 +1327,9 @@ public class DayOfWeekTranslator {
                     <section data-background-color="#4d7e65">
                         <h2>Overly Restrictive Validation</h2>
                         <img src="images/restrict-all-the-things.jpg" height=269 width=350 />
+                        <aside class="notes">
+                            1/7 End @ 4:53
+                        </aside>
                     </section>
 
                     <section>
@@ -1337,6 +1340,9 @@ public class DayOfWeekTranslator {
                             <li>With growth, this may be a LOT of code</li>
                             <li>When omitted by consumers, defects may occur</li>
                         </ul>
+                        <aside class="notes">
+                            2/7 End @ 4:53
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -1362,6 +1368,7 @@ public interface AppointmentManager {
                             </code>
                         </pre>
                         <aside class="notes">
+                            3/7 End @ 4:53
                             <ul>
                                 <li>Upon first glance, this looks pretty solid...</li>
                                 <li>While it is true that it would be difficult to experience an exception within an implementation that abides by this contract, it may put a bit of an unnecessary burden on consumers.</li>
@@ -1387,6 +1394,7 @@ public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
                             </code>
                         </pre>
                         <aside class="notes">
+                            4/7 End @ 4:53
                             <ul>
                                 <li>If a consumer isn't in control of the creation of the List of AppointmentCriteria here, they should ensure no null elements are in the provided param.</li>
                                 <li>Such code is easy to omit, and thus error-prone (for consumers, not API owners).</li>
@@ -1418,6 +1426,7 @@ public interface AppointmentManager {
                             </code>
                         </pre>
                         <aside class="notes">
+                            5/7 End @ 4:53
                             <ul>
                                 <li>The doc differences here are subtle, but important...</li>
                                 <li>Null lists or empty lists are effectively no-ops; they just result in an empty list being returned</li>
@@ -1439,6 +1448,9 @@ public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            6/7 End @ 4:53
+                        </aside>
                     </section>
 
                     <section>
@@ -1453,6 +1465,9 @@ public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
                             </li>
                             <li>Keep burden on consumers in mind</li>
                         </ul>
+                        <aside class="notes">
+                            7/7 End @ 4:53
+                        </aside>
                     </section>
 
                 </section>
@@ -1462,6 +1477,9 @@ public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
                     <section data-background-color="#4d7e65">
                         <h2>Burdening Consumers with Common Tasks</h2>
                         <img src="images/dawson-problems-consuming-api.png" height=318 width=350 />
+                        <aside class="notes">
+                            1/5 End @ 4:55
+                        </aside>
                     </section>
 
                     <section>
@@ -1472,6 +1490,7 @@ public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
                             <li>Collections tend to be a common source of extra burden</li>
                         </ul>
                         <aside class="notes">
+                            2/5 End @ 4:55
                             <ul>
                                 <li>Consider the burden placed on consumers - (is there a way to lessen it)?  Perhaps write sample tests consuming it.</li>
                                 <li>Collections tend to be a common source of extra burden - (consider wrapping in a "plural" object)</li>
@@ -1495,8 +1514,10 @@ public interface Participant {
                             </code>
                         </pre>
                         <aside class="notes">
+                            3/5 End @ 4:55
                             <ul>
                                 <li>Imagine that we only want to get booked participants or conflicted ones?</li>
+                            </ul>
                         </aside>
                     </section>
 
@@ -1521,8 +1542,10 @@ for (Participant singleParticipant : participants) {
                             </code> 
                         </pre>
                         <aside class="notes">
+                            4/5 End @ 4:55
                             <ul>
                                 <li>This is a lot of code considering how simple the use case is (and perhaps how common it is)</li>
+                            </ul>
                         </aside>
                     </section>
 
@@ -1543,6 +1566,7 @@ public interface Participants {
                             </code>
                         </pre>
                         <aside class="notes">
+                            5/5 End @ 4:55
                             <ul>
                                 <li>
                                     Here we make Appointment return Participants instead of a list.
@@ -1563,6 +1587,9 @@ public interface Participants {
                     <section data-background-color="#4d7e65">
                         <h2>Abstraction Leaks</h2>
                         <img src="images/first-world-leaked-abstraction-problems.png" height=233 width=350 />
+                        <aside class="notes">
+                            1/5 End @ 5:00
+                        </aside>
                     </section>
 
                     <section>
@@ -1580,9 +1607,7 @@ public interface Participants {
                             <li>Can unnecessarily complicate consumer understanding (if level of detail is inappropriate)</li>
                         </ul>
                         <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
+                            2/5 End @ 5:00
                         </aside>
                     </section>
 
@@ -1609,6 +1634,9 @@ public interface AppointmentManager {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            3/5 End @ 5:00
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -1632,6 +1660,9 @@ public interface AppointmentManager {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            4/5 End @ 5:00
+                        </aside>
                     </section>
 
                     <section>
@@ -1647,6 +1678,9 @@ public interface AppointmentManager {
                                 </ul>
                             </li>
                         </ul>
+                        <aside class="notes">
+                            5/5 End @ 5:00
+                        </aside>
                     </section>
 
                 </section>
