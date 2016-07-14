@@ -1245,41 +1245,46 @@ public interface AppointmentManager {
                     </section>
                 </section>
                 <section>
+
                     <section data-background-color="#4d7e65">
                         <h2>Compiling Against Implementations</h2>
                         <img src="images/confession-bear-enjoys-compiling-against-implementations.png" height=364 width=350 />
+                    </section>
+
+                    <section data-background-image="images/Nonono_cat.gif" data-background-position="top">
                         <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
+
                         </aside>
                     </section>
-                    <section>
-                        <h2>Compiling Against Implementations</h2>
+
+                   <section>
+                        <h2>Do Not</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>Require an implementation of an object in your API</li>
+                            <li>Require an interface and then cast to an implementation inside the method (pure evil)</li>
+                        </ul>
+                    </section>
+
+                   <section>
+                        <h2>Too late</h2>
+                        <ul>
+                            <li>
+                                If you are already here, you likely have the following options:
+                                <ul>
+                                    <li>Promote the method being consumed from the implementation to the interface</li>
+                                    <li>Create a new interface containing other interface methods and implemetnation method</li>
+                                </ul>
+                            </li>
                         </ul>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
-                    </section>
-                    <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
-                        <pre>
-                            <code data-trim>
-// code goes here with no additional spaces
-                            </code>
-                        </pre>
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
+                                <li>Promote the method - (non passive for other implementors)</li>
+                                <li>Create a new interface - (limits scope to only consumers of this API)</li>
+                            </ul>
                         </aside>
                     </section>
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Burdening Consumers with Common Tasks</h2>
