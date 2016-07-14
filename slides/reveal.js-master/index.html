@@ -90,6 +90,132 @@
                 <section>
 
                     <section data-background-color="#4d7e65">
+                        <h2>Lack of Encapsulation</h2>
+                        <img src="images/joker-mind-loss-over-lack-of-encapsulation.png" height=294 width=500 />
+                    </section>
+
+                    <section>
+                        <h2>Lack of Encapsulation</h2>
+                        <ul>
+                            <li>Makes it difficult to re-use concepts</li>
+                            <li>New implementations of concepts can never be passively introduced</li>
+                            <li>Causes explosion in methods, fields, and test data</li>
+                        </ul>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Code With No Encapsulation</h2>
+                        <pre>
+                            <code data-trim>
+public class Appointment
+{
+    private long appointmentId;
+    private String description;
+    private long organizerId;
+    private String organizerName;
+    private long roomId;
+    private String roomDescription;
+    private boolean doesRoomHaveProjector;
+    private Date beginTime;
+    private Date endTime;
+    private Set&lt;DayOfWeek&gt; weeklyRecurrence;
+    private Set&lt;MonthOfYear&gt; monthlyRecurrence;
+
+    // getters and setters (because there is too many fields for a constructor)
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>
+                                    We have many different concepts represented here:
+                                    <ul>
+                                        <li>Appointment</li>
+                                        <li>Organizer</li>
+                                        <li>Room</li>
+                                        <li>Schedule of the appointment</li>
+                                    </ul>
+                                </li>
+                                <li>It MAY BE true that there may only ever be one room for an Appointment, but that does not mean you should not encapsulate from the start</li>
+                                <li>Encapsulation is not just for things that you want to put in a list</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Code With Encapsulation</h2>
+                        <pre>
+                            <code data-trim>
+public class Appointment
+{
+    private long appointmentId;
+    private String description;
+    private Organizer organizer;
+    private Room room;
+    private Schedule schedule;
+
+    // getters and setters (because there is too many fields for a constructor)
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>We have represented the different concepts as objects</li>
+                                <li>We have freedom to swap out different scheduling algorithms and never have to touch this class</li>
+                                <li>Tests are simplified to only 5 fields now</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Code Study - Class "A"</h2>
+                        <ul>
+                            <li>Class was first created in 2007 (on that fateful day)</li>
+                            <li>Part of a core functionality</li>
+                            <li>Attempted no encapsulation (aside from 1 object that already existed)</li>
+                            <li>Original author left the team by the time activity in the file increased</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="images/class-growth-per-year.png" height=500 width=900 />
+                        <aside class="notes">
+                            <ul>
+                                <li>Data is based off first release of project containing class per year (first release in 2008, 2009, etc)</li>
+                                <li>The field count (in green) is how many class fields this object had (mostly private)</li>
+                                <li>"Other Method" just indicates those that are not getter or setter</li>
+                                <li>The field count started at 29 (large to start with) but since has doubled!</li>
+
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <img src="images/releases-by-year-for-project-containing-class-a.png" height=500 width=900 />
+                        <aside class="notes">
+                            <ul>
+                                <li>class was first written in 2007, released in 2008</li>
+                                <li>5 years of minimal activity</li>
+                                <li>exponential growth in project releases containg this class</li>
+                                <li>2016 was slower, potentially for a few factors, mostly re-writing and changed releases strategy</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Lessons Learned - Class "A"</h2>
+                        <ul>
+                            <li>Encapsulate early and often, allows room for growth</li>
+                            <li>You never know how others might add to the code you write today, set them up for success</li>
+                            <li>Just because an object will only contain one of something, it does not justify avoiding encapsulation</li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section data-background-color="#4d7e65">
                         <h2>Poor Data Types / Data Type Abuse</h2>
                         <img src="images/overly-obsessed-girlfriend-loves-your-strings.png" height=259 width=350 />
                     </section>
@@ -794,132 +920,6 @@ public void consume(Appointment appointment) {
                                 <li>In this case, such a mistake would be a compile-time notification.</li>
                             </ul>
                         </aside>
-                    </section>
-
-                </section>
-
-                <section>
-
-                    <section data-background-color="#4d7e65">
-                        <h2>Lack of Encapsulation</h2>
-                        <img src="images/ancient-aliens-used-encapsulation.png" height=304 width=350 />
-                    </section>
-
-                    <section>
-                        <h2>Lack of Encapsulation</h2>
-                        <ul>
-                            <li>Makes it difficult to re-use concepts</li>
-                            <li>New implementations of concepts can never be passively introduced</li>
-                            <li>Causes explosion in methods, fields, and test data</li>
-                        </ul>
-                    </section>
-
-                    <section data-state="slide-with-code">
-                        <h2>Code With No Encapsulation</h2>
-                        <pre>
-                            <code data-trim>
-public class Appointment
-{
-    private long appointmentId;
-    private String description;
-    private long organizerId;
-    private String organizerName;
-    private long roomId;
-    private String roomDescription;
-    private boolean doesRoomHaveProjector;
-    private Date beginTime;
-    private Date endTime;
-    private Set&lt;DayOfWeek&gt; weeklyRecurrence;
-    private Set&lt;MonthOfYear&gt; monthlyRecurrence;
-
-    // getters and setters (because there is too many fields for a constructor)
-}
-                            </code>
-                        </pre>
-                        <aside class="notes">
-                            <ul>
-                                <li>
-                                    We have many different concepts represented here:
-                                    <ul>
-                                        <li>Appointment</li>
-                                        <li>Organizer</li>
-                                        <li>Room</li>
-                                        <li>Schedule of the appointment</li>
-                                    </ul>
-                                </li>
-                                <li>It MAY BE true that there may only ever be one room for an Appointment, but that does not mean you should not encapsulate from the start</li>
-                                <li>Encapsulation is not just for things that you want to put in a list</li>
-                            </ul>
-                        </aside>
-                    </section>
-
-                    <section data-state="slide-with-code">
-                        <h2>Code With Encapsulation</h2>
-                        <pre>
-                            <code data-trim>
-public class Appointment
-{
-    private long appointmentId;
-    private String description;
-    private Organizer organizer;
-    private Room room;
-    private Schedule schedule;
-
-    // getters and setters (because there is too many fields for a constructor)
-}
-                            </code>
-                        </pre>
-                        <aside class="notes">
-                            <ul>
-                                <li>We have represented the different concepts as objects</li>
-                                <li>We have freedom to swap out different scheduling algorithms and never have to touch this class</li>
-                                <li>Tests are simplified to only 5 fields now</li>
-                            </ul>
-                        </aside>
-                    </section>
-
-                    <section data-state="slide-with-code">
-                        <h2>Code Study - Class "A"</h2>
-                        <ul>
-                            <li>Class was first created in 2007 (on that fateful day)</li>
-                            <li>Part of a core functionality</li>
-                            <li>Attempted no encapsulation (aside from 1 object that already existed)</li>
-                            <li>Original author left the team by the time activity in the file increased</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <img src="images/class-growth-per-year.png" height=500 width=900 />
-                        <aside class="notes">
-                            <ul>
-                                <li>Data is based off first release of project containing class per year (first release in 2008, 2009, etc)</li>
-                                <li>The field count (in green) is how many class fields this object had (mostly private)</li>
-                                <li>"Other Method" just indicates those that are not getter or setter</li>
-                                <li>The field count started at 29 (large to start with) but since has doubled!</li>
-
-                            </ul>
-                        </aside>
-                    </section>
-
-                    <section>
-                        <img src="images/releases-by-year-for-project-containing-class-a.png" height=500 width=900 />
-                        <aside class="notes">
-                            <ul>
-                                <li>class was first written in 2007, released in 2008</li>
-                                <li>5 years of minimal activity</li>
-                                <li>exponential growth in project releases containg this class</li>
-                                <li>2016 was slower, potentially for a few factors, mostly re-writing and changed releases strategy</li>
-                            </ul>
-                        </aside>
-                    </section>
-
-                    <section data-state="slide-with-code">
-                        <h2>Lessons Learned - Class "A"</h2>
-                        <ul>
-                            <li>Encapsulate early and often, allows room for growth</li>
-                            <li>You never know how others might add to the code you write today, set them up for success</li>
-                            <li>Just because an object will only contain one of something, it does not justify avoiding encapsulation</li>
-                        </ul>
                     </section>
 
                 </section>
