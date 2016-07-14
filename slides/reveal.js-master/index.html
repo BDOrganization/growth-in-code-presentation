@@ -32,6 +32,9 @@
                     <p>
                         <small>Created by Dustin Singleton and Brandon Rockhold</small>
                     </p>
+                    <aside class="notes">
+                        1/5 End @ 4:23
+                    </aside>
                 </section>
 
                 <section>
@@ -43,6 +46,7 @@
                         <li>Daily design decisions have long-reaching impacts</li>
                     </ul>
                     <aside class="notes">
+                        2/5 End @ 4:23
                         <ul>
                             <li>This gif shows the Devil's Snare at work on a struggling Ronald Weasley</li>
                             <li>The title of this presentation and the related concept of the growth of poor API's capable of strangling a code base (where the poor API's are akin to a growing Devil's Snare) are the only actual ties to the Harry Potter theme present throughout</li>
@@ -63,6 +67,10 @@
                         </li>
                         <li>Passionate about clean code, API design, and being good code citizens in general</li>
                     </ul>
+                    <aside class="notes">
+                        3/5 End @ 4:23
+
+                    </aside>
                 </section>
 
                 <section>
@@ -75,6 +83,9 @@
                     <br />
                     <br />
                     <small>* Only <em>some</em> of these scenarios, as we are unfortunately not wizards</small>
+                    <aside class="notes">
+                        4/5 End @ 4:23
+                    </aside>
                 </section>
 
                 <section>
@@ -85,6 +96,9 @@
                         <li>Some code is omitted for display and space reasons</li>
                         <li>Try not to get hung up on details, we will point out the significant parts</li>
                     </ul>
+                    <aside class="notes">
+                        5/5 End @ 4:23
+                    </aside>
                 </section>
 
                 <section>
@@ -92,6 +106,9 @@
                     <section data-background-color="#4d7e65">
                         <h2>Lack of Encapsulation</h2>
                         <img src="images/joker-mind-loss-over-lack-of-encapsulation.png" height=294 width=500 />
+                        <aside class="notes">
+                            1/9 End @ 4:28
+                        </aside>
                     </section>
 
                     <section>
@@ -99,15 +116,21 @@
                         <p>
                             Representing logical concepts as separate objects.  
                         </p>
+                        <aside class="notes">
+                            2/9 End @ 4:28
+                        </aside>
                     </section>
 
                     <section>
                         <h2>Lack of Encapsulation</h2>
                         <ul>
                             <li>Makes it difficult to re-use concepts</li>
-                            <li>New implementations of concepts can never be passively introduced</li>
-                            <li>Causes explosion in methods, fields, and test data</li>
+                            <li>New implementations of concepts will likely not be able to be passively introduced</li>
+                            <li>Causes an explosion of methods, fields, and test data</li>
                         </ul>
+                        <aside class="notes">
+                            3/9 End @ 4:28
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -133,6 +156,7 @@ public class Appointment
                             </code>
                         </pre>
                         <aside class="notes">
+                            4/9 End @ 4:28
                             <ul>
                                 <li>
                                     We have many different concepts represented here:
@@ -164,6 +188,7 @@ public class Appointment
                             </code>
                         </pre>
                         <aside class="notes">
+                            5/9 End @ 4:28
                             <ul>
                                 <li>We have represented the different concepts as objects</li>
                                 <li>We have freedom to swap out different scheduling algorithms and never have to touch this class</li>
@@ -180,11 +205,15 @@ public class Appointment
                             <li>Attempted no encapsulation (aside from 1 object that already existed)</li>
                             <li>Original author left the team by the time activity in the file increased</li>
                         </ul>
+                        <aside class="notes">
+                            6/9 End @ 4:28
+                        </aside>
                     </section>
 
                     <section>
                         <img src="images/class-growth-per-year.png" height=500 width=900 />
                         <aside class="notes">
+                            7/9 End @ 4:28
                             <ul>
                                 <li>Data is based off first release of project containing class per year (first release in 2008, 2009, etc)</li>
                                 <li>The field count (in green) is how many class fields this object had (mostly private)</li>
@@ -198,6 +227,7 @@ public class Appointment
                     <section>
                         <img src="images/releases-by-year-for-project-containing-class-a.png" height=500 width=900 />
                         <aside class="notes">
+                            8/9 End @ 4:28
                             <ul>
                                 <li>class was first written in 2007, released in 2008</li>
                                 <li>5 years of minimal activity</li>
@@ -214,6 +244,9 @@ public class Appointment
                             <li>You never know how others might add to the code you write today, set them up for success</li>
                             <li>Just because an object will only contain one of something, it does not justify avoiding encapsulation</li>
                         </ul>
+                        <aside class="notes">
+                            9/9 End @ 4:28
+                        </aside>
                     </section>
 
                 </section>
@@ -223,6 +256,9 @@ public class Appointment
                     <section data-background-color="#4d7e65">
                         <h2>Easily Misused Collections API's</h2>
                         <img src="images/most-interesting-man-hates-his-consumers.png" height=350 width=279 />
+                        <aside class="notes">
+                            1/6 End @ 4:30:30
+                        </aside>
                     </section>
 
                     <section>
@@ -234,6 +270,9 @@ public class Appointment
                             <li>Iteration over returned collections is primary use-case; be nice to your consumers</li>
                             <li>ABSOLUTELY document how the API behaves, even if you are evil</li>
                         </ul>
+                        <aside class="notes">
+                            2/6 End @ 4:30:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -257,6 +296,9 @@ public class AppointmentManager {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            3/6 End @ 4:30:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -272,6 +314,9 @@ Collection&lt;Date&gt; dates = appointmentManager.getAvailableBeginTimes(new Dat
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            4/6 End @ 4:30:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -295,6 +340,9 @@ public class AppointmentManager {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            5/6 End @ 4:30:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -306,6 +354,9 @@ for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            6/6 End @ 4:30:30
+                        </aside>
                     </section>
 
                 </section>
@@ -315,6 +366,9 @@ for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)
                     <section data-background-color="#4d7e65">
                         <h2>Restrictive Collections API's</h2>
                         <img src="images/scumbag-steve-restricts-your-collections.png" height=350 width=349 />
+                        <aside class="notes">
+                            1/6 End @ 4:33:30
+                        </aside>
                     </section>
 
                     <section>
@@ -329,6 +383,9 @@ for (Date date : appointmentManager.getAvailableBeginTimes(new Date(), pastDate)
                             </li>
                             <li>May result in pre-emptive decisions around whether or not iteration order or duplicate elements matter</li>
                         </ul>
+                        <aside class="notes">
+                            2/6 End @ 4:33:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -342,6 +399,9 @@ public interface AppointmentManager {
                             </code>
                         </pre>
                         <p>Not necessarily overly restrictive, but it may be. At least think about it on a case-by-case basis.</p>
+                        <aside class="notes">
+                            3/6 End @ 4:33:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -367,6 +427,9 @@ public class Consumer {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            4/6 End @ 4:33:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -383,6 +446,9 @@ public interface AppointmentManager {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            5/6 End @ 4:33:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -404,6 +470,9 @@ public interface AppointmentManager {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            6/6 End @ 4:33:30
+                        </aside>
                     </section>
 
                 </section>
@@ -413,6 +482,9 @@ public interface AppointmentManager {
                     <section data-background-color="#4d7e65">
                         <h2>Inconsistent State</h2>
                         <img src="images/not-sure-fry-not-sure-about-immutability.png" height=263 width=350 />
+                        <aside class="notes">
+                            1/12 End @ 4:39
+                        </aside>
                     </section>
 
                     <section>
@@ -425,6 +497,7 @@ public interface AppointmentManager {
                             </ul>
                         </ul>
                         <aside class="notes">
+                            2/12 End @ 4:39
                             <ul>
                                 <li>These two tend to go together (though they are different concepts).  We will mostly talk about them together.</li>
                             </ul>
@@ -444,6 +517,7 @@ public interface AppointmentManager {
                             <li>Prefer immutability when possible</li>
                         </ul>
                         <aside class="notes">
+                            3/12 End @ 4:39
                             <ul>
                                 <li>Enforce state consistently</li>
                                 <ul>
@@ -475,6 +549,7 @@ public interface Appointment {
                             </code>
                         </pre>
                         <aside class="notes">
+                            4/12 End @ 4:39
                             <ul>
                                 <li>All getters have a corresponding setter</li>
                                 <li>State can change on this object at any time, meaning we can never trust the state</li>
@@ -493,6 +568,7 @@ if (appointment.getDescription() != null) {
                             </code>
                         </pre>
                         <aside class="notes">
+                            5/12 End @ 4:39
                             <ul>
                                 <li>Still not safe, this can throw a NullPointerException</li>
                                 <li>Multiple threads could cause the null check to pass but the description to be null</li>
@@ -524,6 +600,7 @@ public interface Appointment {
                             </code>
                         </pre>
                         <aside class="notes">
+                            6/12 End @ 4:39
                             <ul>
                                 <li>Ensures that the values can never be null</li>
                                 <li>Ensures that the values can never be changed after construction</li>
@@ -547,6 +624,7 @@ public DefaultAppointment(long id, String description,
                             </code>
                         </pre>
                         <aside class="notes">
+                            7/12 End @ 4:39
                             <ul>
                                 <li>No more setters removes most ways of adding inconsistent state</li>
                                 <li>We need to ensure the contructor adheres to the requirement too</li>
@@ -573,6 +651,7 @@ public void consumeParticipants(Appointment appointment) {
                             </code>
                         </pre>
                         <aside class="notes">
+                            8/12 End @ 4:39
                             <ul>
                                 <li>No more need for null checking, the description and participants can NEVER be null</li>
                             </ul>
@@ -589,6 +668,7 @@ public void consumeParticipants(Appointment appointment) {
                             </ul>
                         </ul>
                         <aside class="notes">
+                            9/12 End @ 4:39
                             <ul>
                                 <li>ordering of the fields is not intuitive</li>
                                 <ul>
@@ -610,6 +690,7 @@ public void consumeParticipants(Appointment appointment) {
                             <li>Builders support all possible permutations of the specified fields</li>
                         </ul>
                         <aside class="notes">
+                            10/12 End @ 4:39
                         </aside>
                     </section>
 
@@ -633,6 +714,7 @@ public interface Appointment {
                             </code>
                         </pre>
                         <aside class="notes">
+                            11/12 End @ 4:39
                             <ul>
                                 <li>All "mutator" methods return the builder, allowing (but not requiring) chained calls</li>
                                 <li>The builder is mutable, but the returned Appointment object can not be modified</li>
@@ -656,6 +738,7 @@ Appointment appointment = builder.build();
                             </code>
                         </pre>
                         <aside class="notes">
+                            12/12 End @ 4:39
                         </aside>
                     </section>
 
@@ -666,6 +749,9 @@ Appointment appointment = builder.build();
                     <section data-background-color="#4d7e65">
                         <h2>Growing Parameter List</h2>
                         <img src="images/the-number-of-params-is-too-damn-high.png" height=263 width=350 />
+                        <aside class="notes">
+                            1/6 End @ 4:43
+                        </aside>
                     </section>
 
                     <section>
@@ -682,6 +768,7 @@ Appointment appointment = builder.build();
                             </li>
                         </ul>
                         <aside class="notes">
+                            2/6 End @ 4:43
                             <ul>
                                 <li>When param lists include several occurrences of the same types, it is incredibly easy to specify the values out of order.</li>
                                 <li>ASK THE AUDIENCE to raise hands if they've ever been in that situation...</li>
@@ -712,6 +799,7 @@ public interface AppointmentManager {
                         </pre>
                         <p>...and the cycle continues through the years</p>
                         <aside class="notes">
+                            3/6 End @ 4:43
                             <ul>
                                 <li>Upon initial release, the API may have started out simple, with perhaps a single parameter...</li>
                                 <li>Over time, the list of parameters may begin to increase. To remain passive, we overload the API and create various combinations of those parameters.</li>
@@ -745,6 +833,7 @@ public class AppointmentRetrievalCriteria {
                             </code>
                         </pre>
                         <aside class="notes">
+                            4/6 End @ 4:43
                             <ul>
                                 <li>This example shows a new AppointmentRetrievalCriteria object which represents a collection of related parameters used for retrieving appointments.</li>
                                 <li>Rather than continue to either make non-passive changes or to overload the methods in the AppointmentManager API we were just looking at, this approach allows us to introduce one last API change that should grow more gracefully over time.</li>
@@ -772,6 +861,7 @@ public void consumeAndSpecifyAllValues() {
                             </code>
                         </pre>
                         <aside class="notes">
+                            5/6 End @ 4:43
                             <ul>
                                 <li>This example utilizes the Builder pattern that we previously talked about and specifies all values.</li>
                                 <li>Note that you could also chain these method calls, as is typical with builders.</li>
@@ -794,6 +884,7 @@ public void consumeAndSpecifyRequiredValues() {
                             </code>
                         </pre>
                         <aside class="notes">
+                            6/6 End @ 4:43
                             <ul>
                                 <li>One of the major benefits with refactoring to utilize a parameter object is that you are now free to add non-required fields in a passive manner.</li>
                                 <li>ONLY in cases where a new required field is introduced (and which CANNOT have a default value provided on behalf of the consumer) are there non-passive changes.</li>
@@ -808,6 +899,9 @@ public void consumeAndSpecifyRequiredValues() {
                     <section data-background-color="#4d7e65">
                         <h2>Weak Typing</h2>
                         <img src="images/y-u-no-strong-type.png" height=257 width=350 />
+                        <aside class="notes">
+                            1/6 End @ 4:45
+                        </aside>
                     </section>
 
                     <section>
@@ -823,6 +917,7 @@ public void consumeAndSpecifyRequiredValues() {
                             <li>Any values which make it through boundary checking, but represent different data will blow up at runtime (or silently wreck havoc)</li>
                         </ul>
                         <aside class="notes">
+                            2/6 End @ 4:45
                             <ul>
                                 <li>Error-prone, easier for consumers to mess up</li>
                                 <li>Burden to do boundary checking either lies within implementation (and must be doc'd thoroughly), or must be handled by all consumers (and still must be doc'd thoroughly)
@@ -853,6 +948,7 @@ public interface ParticipantScheduleManager {
                             </code>
                         </pre>
                         <aside class="notes">
+                            3/6 End @ 4:45
                             <ul>
                                 <li>Here we have a simple Appointment class, which can be constructed with and allows returning a long id.</li>
                                 <li>This class also has capability to get a list of Participant objects, each of which also has a long id.</li>
@@ -878,6 +974,7 @@ public void consume(Appointment appointment) {
                             </code>
                         </pre>
                         <aside class="notes">
+                            4/6 End @ 4:45
                             <ul>
                                 <li>In this consumption example, the method is iterating over the various Participant objects involved in the appointment.</li>
                                 <li>The participant's id is retrieved an utilized within.</li>
@@ -910,6 +1007,7 @@ public interface ParticipantScheduleManager {
                             </code>
                         </pre>
                         <aside class="notes">
+                            5/6 End @ 4:45
                             <ul>
                                 <li>This example shows updated Appointment and ParticipantScheduleManager APIs to use strong types.</li>
                                 <li>The previously used long values are replaced with objects representing the identifiers.</li>
@@ -935,6 +1033,7 @@ public void consume(Appointment appointment) {
                             </code>
                         </pre>
                         <aside class="notes">
+                            6/6 End @ 4:45
                             <ul>
                                 <li>In the updated consumption example, the previously possible class of defects around using the Appointment's identifier when attempting to retrieve the Participant's schedule is no longer possible.</li>
                                 <li>In this case, such a mistake would be a compile-time notification.</li>
@@ -949,6 +1048,9 @@ public void consume(Appointment appointment) {
                     <section data-background-color="#4d7e65">
                         <h2>Poor Data Types / Data Type Abuse</h2>
                         <img src="images/overly-obsessed-girlfriend-loves-your-strings.png" height=259 width=350 />
+                        <aside class="notes">
+                            1/9 End @ 4:49:30
+                        </aside>
                     </section>
 
                     <section>
@@ -958,6 +1060,9 @@ public void consume(Appointment appointment) {
                             <li>Lack proper means of validation, or at least complicate it</li>
                             <li>Place unnecessary burden on consumers (if they must parse or translate)</li>
                         </ul>
+                        <aside class="notes">
+                            2/9 End @ 4:49:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -978,6 +1083,9 @@ public interface RecurringAppointment {
 }
                             </code>
                         </pre>
+                        <aside class="notes">
+                            3/9 End @ 4:49:30
+                        </aside>
                     </section>
 
                     <section data-state="slide-with-code">
@@ -1004,6 +1112,7 @@ public void consume(RecurringAppointment recurringAppointment) {
                             </code>
                         </pre>
                         <aside class="notes">
+                            4/9 End @ 4:49:30
                             <ul>
                                 <li>The doc didn't indicate if case-sensitive, so cross your fingers!</li>
                                 <li>Awkward zero-based indexing used for parsing days of week; Relies on API doc to indicate that it starts with Sunday vs Monday</li>
@@ -1030,9 +1139,7 @@ public interface RecurringAppointment {
                             </code>
                         </pre>
                         <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
+                            5/9 End @ 4:49:30
                         </aside>
                     </section>
 
@@ -1056,9 +1163,7 @@ public void consume(RecurringAppointment recurringAppointment) {
                             </code>
                         </pre>
                         <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
+                            6/9 End @ 4:49:30
                         </aside>
                     </section>
 
@@ -1087,6 +1192,7 @@ public Set&lt;DayOfWeek&gt; getWeeklyRecurrenceAsSet() {
                             </code>
                         </pre>
                         <aside class="notes">
+                            7/9 End @ 4:49:30
                             <ul>
                                 <li>The example shown here is a non-passive change, however, as it replaces the getWeeklyRecurrence method's return type with a Set of DayOfWeek enum values</li>
                                 <li>One passive transition option would be to add new API, such as 'getWeeklyRecurrenceAsSet' and have the implementation handle the messy details of translating the existing poor data type to the new good data type.</li>
@@ -1116,6 +1222,7 @@ public class RecurringAppointmentWrapper {
                             </code>
                         </pre>
                         <aside class="notes">
+                            8/9 End @ 4:49:30
                             <p>Benefits...</p>
                             <ul>
                                 <li>Another passive transition would be to wrap the existing RecurringAppointment class with a new class that provides the desired API.</li>
@@ -1151,6 +1258,7 @@ public class DayOfWeekTranslator {
                             </code>
                         </pre>
                         <aside class="notes">
+                            9/9 End @ 4:49:30
                             <p>Benefits...</p>
                             <ul>
                                 <li>Passive approach...</li>
@@ -1174,11 +1282,14 @@ public class DayOfWeekTranslator {
                     <section data-background-color="#4d7e65">
                         <h2>Compiling Against Implementations</h2>
                         <img src="images/confession-bear-enjoys-compiling-against-implementations.png" height=364 width=350 />
+                        <aside class="notes">
+                            1/2 End @ 4:50
+                        </aside>
                     </section>
 
                     <section data-background-image="images/Nonono_cat.gif" data-background-position="top">
                         <aside class="notes">
-
+                            2/2 End @ 4:50
                         </aside>
                     </section>
 
