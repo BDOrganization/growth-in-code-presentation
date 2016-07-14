@@ -5,7 +5,6 @@ import java.util.List;
 import com.bdorganization.commontasks.common.Participant;
 
 @SuppressWarnings({ "javadoc" })
-public interface Appointment
-{
+public interface Appointment {
     List<Participant> getParticipants();
 }

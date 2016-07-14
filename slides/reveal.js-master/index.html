@@ -1296,32 +1296,101 @@ public interface AppointmentManager {
                                 <li></li>
                         </aside>
                     </section>
+
                     <section>
                         <h2>Burdening Consumers with Common Tasks</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>There is a "typical" consumption of your API</li>
+                            <li>Consider the burden placed on consumers</li>
+                            <li>Collections tend to be a common source of extra burden</li>
                         </ul>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>Consider the burden placed on consumers - (is there a way to lessen it)?  Perhaps write sample tests consuming it.</li>
+                                <li>Collections tend to be a common source of extra burden - (consider wrapping in a "plural" object)</li>
                         </aside>
                     </section>
+
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Burdening Consumers Example</h2>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public interface Appointment {
+    List&lt;Participant&gt; getParticipants();
+}
+                            </code>
+                            <code data-trim>
+public interface Participant {
+    String getName();
+    boolean isBooked();
+    boolean isConflicted();
+}
                             </code>
                         </pre>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>Imagine that we only want to get booked participants or conflicted ones?</li>
                         </aside>
                     </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Burdening Consumers Consumer Example</h2>
+                        <pre>
+                            <code data-trim>
+List&lt;Participant&gt; bookedParticipants = new ArrayList&lt;Participant&gt;();
+for (Participant participant : appointment.getParticipants()) {
+    if (participant.isBooked()) {
+        bookedParticipants.add(participant);
+    }
+}
+                            </code>
+                            <code data-trim>
+List&lt;Participant&gt; conflictedParticipants = new ArrayList&lt;&gt;(participants.size());
+for (Participant singleParticipant : participants) {
+    if (singleParticipant.isConflicted()) {
+        conflictedParticipants.add(singleParticipant);
+    }
+}
+                            </code> 
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>This is a lot of code considering how simple the use case is (and perhaps how common it is)</li>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Burdening Consumers Participants API</h2>
+                        <pre>
+                            <code data-time>
+public interface Appointment {
+    Participants getParticipants();
+}
+                            </code>
+                            <code data-trim>
+public interface Participants {
+    List&lt;Participant&gt; getAllParticipants();
+    List&lt;Participant&gt; getAllBookedParticipants();
+    List&lt;Participant&gt; getAllConflictedParticipants();
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>
+                                    Here we make Appointment return Participants instead of a list.
+                                    <ul>
+                                        <li>Implementation can change from List to any other data type internally</li>
+                                        <li>Consumers code will be much cleaner</li>
+                                        <li>Future performance gains can be made consistently across consumers</li>
+                                        <li>Consider returning a stream for java 8 programmers</li>
+                                    </ul>
+                                </li>
+                        </aside>
+                    </section>
+
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Lack of Adapters</h2>
