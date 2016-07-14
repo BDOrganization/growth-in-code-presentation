@@ -1122,36 +1122,140 @@ public interface AppointmentManager {
                 </section>
 
                 <section>
+
                     <section data-background-color="#4d7e65">
                         <h2>Overly Restrictive Validation</h2>
                         <img src="images/restrict-all-the-things.jpg" height=269 width=350 />
                     </section>
+
                     <section>
                         <h2>Overly Restrictive Validation</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>Unnecesary burden on consumers</li>
+                            <li>Inputs must be sanitized by ALL consumers</li>
+                            <li>With growth, this may be a LOT of code</li>
+                            <li>When omitted by consumers, defects may occur</li>
                         </ul>
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
+
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Overly Restrictive API Example</h2>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public interface AppointmentManager {
+    /**
+     * Creates appointments based on the specified list of {@link AppointmentCriteria}
+     * objects.
+     * @param criteria
+     *            The list of {@link AppointmentCriteria} objects used to create the
+     *            appointments. This list cannot be {@code null}, empty, or contain
+     *            {@code null} elements.
+     * @return the list of created appointments. This list will never be {@code null}
+     *         but may be empty.
+     * @throws IllegalArgumentException
+     *             if the specified {@code criteria} is {@code null}, empty, or
+                  contains {@code null} elements.
+     */
+    List&lt;Appointment&gt; createAppointments(List&lt;AppointmentCriteria&gt; criteria);
+}
                             </code>
                         </pre>
                         <aside class="notes">
                             <ul>
-                                <li></li>
-                                <li></li>
+                                <li>Upon first glance, this looks pretty solid...</li>
+                                <li>While it is true that it would be difficult to experience an exception within an implementation that abides by this contract, it may put a bit of an unnecessary burden on consumers.</li>
+                                <li>For ex: what if a consumer is constructing instances of AppointmentCriteria in an iterative fashion, but has some scenarios where a valid instance cannot be created (thus resulting in a null element being inserted into the list)?</li>
+                            </ul>
                         </aside>
                     </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Overly Restrictive API Example</h2>
+                        <pre>
+                            <code data-trim>
+public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
+    List&lt;Appointment&gt; appointments = null;
+    if (appointmentCriteria != null &amp;&amp; !appointmentCriteria.isEmpty()) {
+        // Remove all null elements before calling API...
+        appointmentCriteria.removeAll(Collections.singleton(null));
+        appointments = appointmentManager.createAppointments(appointmentCriteria);
+    }
+
+    System.out.println(appointments);
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>If a consumer isn't in control of the creation of the List of AppointmentCriteria here, they should ensure no null elements are in the provided param.</li>
+                                <li>Such code is easy to omit, and thus error-prone (for consumers, not API owners).</li>
+                                <li>Increased growth in consumers also increases chances that this will blow up somewhere.</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Less Restrictive API Example</h2>
+                        <pre>
+                            <code data-trim>
+public interface AppointmentManager {
+    /**
+     * Creates appointments based on the specified list of {@link AppointmentCriteria}
+     * objects. If {@code null} or an empty list of {@link AppointmentCriteria} is
+     * specified, no actions will be taken and an empty list will be returned.
+     * 
+     * @param criteria
+     *            The list of {@link AppointmentCriteria} objects used to create the
+     *            appointments. If the list is {@code null} then an empty list will be
+     *            assumed. Additionally, if {@code null} elements are specified, those
+     *            values will be ignored.
+     * @return the list of created appointments. This list will never be {@code null}
+     *         but may be empty.
+     */
+    List&lt;Appointment&gt; createAppointments(List&lt;AppointmentCriteria&gt; criteria);
+}
+                            </code>
+                        </pre>
+                        <aside class="notes">
+                            <ul>
+                                <li>The doc differences here are subtle, but important...</li>
+                                <li>Null lists or empty lists are effectively no-ops; they just result in an empty list being returned</li>
+                                <li>Empty elements are safely ignored without effort by consumers</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Less Restrictive API Example</h2>
+                        <ul>
+                            <li>Simplified consumption case</li>
+                            <li>Noisy code to check for null, empty, and null elements removed for EVERY consumption point</li>
+                        </ul>
+                        <pre>
+                            <code data-trim>
+public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
+    System.out.println(appointmentManager.createAppointments(appointmentCriteria));
+}
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>Validation Considerations</h2>
+                        <ul>
+                            <li>As an API provider, ensure your API's don't blow up</li>
+                            <li>
+                                Be as lenient as possible while keeping things safe
+                                <ul>
+                                    <li>Move as much validation into your implementation and off of consumers as possible</li>
+                                </ul>
+                            </li>
+                            <li>Keep burden on consumers in mind</li>
+                        </ul>
+                    </section>
+
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Abstraction Leaks</h2>
