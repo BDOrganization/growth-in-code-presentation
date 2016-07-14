@@ -945,42 +945,103 @@ public void consumeAndSpecifyRequiredValues() {
                 </section>
 
                 <section>
+
                     <section data-background-color="#4d7e65">
-                        <h2>Unnecessarily Restrictive Collections API's</h2>
-                        // TODO Include img src and dimensions as appropriate
-                        <img src="" height=350 width=350 />
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
+                        <h2>Restrictive Collections API's</h2>
+                        <img src="images/scumbag-steve-restricts-your-collections.png" height=350 width=349 />
                     </section>
+
                     <section>
-                        <h2>Unnecessarily Restrictive Collections API's</h2>
+                        <h2>Restrictive Collections API's</h2>
                         <ul>
-                            <li>...</li>
-                            <li>...</li>
+                            <li>
+                                Can be burdensome for consumers
+                                <ul>
+                                    <li>They may write code to convert from one type to another</li>
+                                    <li>As growth occurs, so too would amount of translation code</li>
+                                </ul>
+                            </li>
+                            <li>May result in pre-emptive decisions around whether or not iteration order or duplicate elements matter</li>
                         </ul>
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
                     </section>
+
                     <section data-state="slide-with-code">
-                        <h2>Code Example Slide</h2>
+                        <h2>Restrictive API Example</h2>
                         <pre>
                             <code data-trim>
-// code goes here with no additional spaces
+public interface AppointmentManager {
+    // Assumes order is needed, but what if you're just iterating over elements?
+    List&lt;Appointment&gt; createAppointments(List&lt;AppointmentCriteria&gt; criteria);
+}
                             </code>
                         </pre>
-                        <aside class="notes">
-                            <ul>
-                                <li></li>
-                                <li></li>
-                        </aside>
+                        <p>Not necessarily overly restrictive, but it may be. At least think about it on a case-by-case basis.</p>
                     </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Consuming Restrictive API Example</h2>
+                        <pre>
+                            <code data-trim data-noescape>
+public class Consumer {
+    private final AppointmentManager appointmentManager;
+    public Consumer(AppointmentManager appointmentManager) {
+        this.appointmentManager = appointmentManager;
+    }
+
+    public void consume() {
+        List&lt;AppointmentCriteria&gt; appointmentCriteria = 
+                new ArrayList&lt;AppointmentCriteria&gt;();
+        appointmentManager.createAppointments(appointmentCriteria);
+
+        Set&lt;AppointmentCriteria&gt; appointmentCriteriaSet = 
+                new HashSet&lt;AppointmentCriteria&gt;();
+        // <mark>DOES NOT COMPILE</mark>
+        appointmentManager.createAppointments(appointmentCriteriaSet);
+    }
+}
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Nonrestrictive API Example (Passive)</h2>
+                        <ul>
+                            <li>Less-restrictive param and SAME return type</li>
+                            <li>Assumes order/duplicates for param is irrelevant</li>
+                        </ul>
+                        <pre>
+                            <code data-trim>
+public interface AppointmentManager {
+    List&lt;Appointment&gt; createAppointments(
+            Collection&lt;AppointmentCriteria&gt; criteria);
+}
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Nonrestrictive API Example (Non-passive)</h2>
+                        <ul>
+                            <li>
+                                Less-restrictive param and DIFFERENT return type
+                                <ul>
+                                    <li>Non-passive; requires creating List from returned Collection for previous consumers</li>
+                                </ul>
+                            </li>
+                            <li>Assumes order/duplicates for param AND return values is irrelevant</li>
+                        </ul>
+                        <pre>
+                            <code data-trim>
+public interface AppointmentManager {
+    Collection&lt;Appointment&gt; createAppointments(
+            Collection&lt;AppointmentCriteria&gt; criteria);
+}
+                            </code>
+                        </pre>
+                    </section>
+
                 </section>
+
                 <section>
                     <section data-background-color="#4d7e65">
                         <h2>Unnecessarily Restrictive Validation</h2>
