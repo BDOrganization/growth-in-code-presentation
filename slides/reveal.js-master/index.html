@@ -841,15 +841,42 @@ public class Appointment
                             <li>Class was first created in 2007 (on that fateful day)</li>
                             <li>Part of a core functionality</li>
                             <li>Attempted no encapsulation (aside from 1 object that already existed)</li>
+                            <li>Original author left the team by the time activity in the file increased</li>
                         </ul>
                     </section>
 
                     <section>
                         <img src="images/class-growth-per-year.png" height=500 width=900 />
+                        <aside class="notes">
+                            <ul>
+                                <li>Data is based off first release of project containing class per year (first release in 2008, 2009, etc)</li>
+                                <li>The field count (in green) is how many class fields this object had (mostly private)</li>
+                                <li>"Other Method" just indicates those that are not getter or setter</li>
+                                <li>The field count started at 29 (large to start with) but since has doubled!</li>
+
+                            </ul>
+                        </aside>
                     </section>
 
                     <section>
                         <img src="images/releases-by-year-for-project-containing-class-a.png" height=500 width=900 />
+                        <aside class="notes">
+                            <ul>
+                                <li>class was first written in 2007, released in 2008</li>
+                                <li>5 years of minimal activity</li>
+                                <li>exponential growth in project releases containg this class</li>
+                                <li>2016 was slower, potentially for a few factors, mostly re-writing and changed releases strategy</li>
+                            </ul>
+                        </aside>
+                    </section>
+
+                    <section data-state="slide-with-code">
+                        <h2>Lessons Learned - Class "A"</h2>
+                        <ul>
+                            <li>Encapsulate early and often, allows room for growth</li>
+                            <li>You never know how others might add to the code you write today, set them up for success</li>
+                            <li>Just because an object will only contain one of something, it does not justify avoiding encapsulation</li>
+                        </ul>
                     </section>
 
                 </section>
