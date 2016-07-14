@@ -1342,15 +1342,15 @@ public class DayOfWeekTranslator {
                     <section data-state="slide-with-code">
                         <h2>Overly Restrictive API Example</h2>
                         <pre>
-                            <code data-trim>
+                            <code data-trimk data-noescape>
 public interface AppointmentManager {
     /**
      * Creates appointments based on the specified list of {@link AppointmentCriteria}
      * objects.
      * @param criteria
      *            The list of {@link AppointmentCriteria} objects used to create the
-     *            appointments. This list cannot be {@code null}, empty, or contain
-     *            {@code null} elements.
+     *            appointments. This list cannot be <mark>{@code null}, empty, or contain</mark>
+     *            <mark>{@code null} elements</mark>.
      * @return the list of created appointments. This list will never be {@code null}
      *         but may be empty.
      * @throws IllegalArgumentException
@@ -1398,7 +1398,7 @@ public void consume(List&lt;AppointmentCriteria&gt; appointmentCriteria) {
                     <section data-state="slide-with-code">
                         <h2>Less Restrictive API Example</h2>
                         <pre>
-                            <code data-trim>
+                            <code data-trim data-noescape>
 public interface AppointmentManager {
     /**
      * Creates appointments based on the specified list of {@link AppointmentCriteria}
@@ -1407,9 +1407,9 @@ public interface AppointmentManager {
      * 
      * @param criteria
      *            The list of {@link AppointmentCriteria} objects used to create the
-     *            appointments. If the list is {@code null} then an empty list will be
-     *            assumed. Additionally, if {@code null} elements are specified, those
-     *            values will be ignored.
+     *            appointments. <mark>If the list is {@code null} then an empty list will be</mark>
+     *            <mark>assumed. Additionally, if {@code null} elements are specified, those</mark>
+     *            <mark>values will be ignored.</mark>
      * @return the list of created appointments. This list will never be {@code null}
      *         but may be empty.
      */
