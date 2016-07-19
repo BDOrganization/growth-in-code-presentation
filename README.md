@@ -22,6 +22,9 @@
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # DevCon2016
+## Disclaimer
+The presentation block that we were given was a 40 minute block.  We were not able to make it through all of the content outlined in this readme.  For the reason, the readme below just shows some of our thoughts around it.  Perhaps in the future we will build out some of the other sections.
+
 ## Abstract
 Topics covered in this manner (pending time) will include the following:
 
