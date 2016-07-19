@@ -23,7 +23,7 @@
 
 # DevCon2016
 ## Disclaimer
-The presentation block that we were given was a 40 minute block.  We were not able to make it through all of the content outlined in this readme.  For the reason, the readme below just shows some of our thoughts around it.  Perhaps in the future we will build out some of the other sections.
+This presentation was originally developed to fit within a 40 minute time slot. We were ultimately not able to make it through all of the content that we had originally outlined in this readme, however. As such, the information below is out of sync with what ultimately made it in the slides. While we could trim the readme down to be in sync with the slides, we've opted to keep it as-is for now, as it shows some of our original thoughts around the presentation's content, and we are contemplating expanding it out in the future.
 
 ## Abstract
 Topics covered in this manner (pending time) will include the following:
